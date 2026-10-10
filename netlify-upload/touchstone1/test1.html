@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Written Test 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const tf = ['True', 'False'];
+const cBox = ["'s", 'are', "I'm", "it's", "we're", "We're", "what's", "you're"];
+const meToo = ['Me too', 'Me neither'];
+const gBox = ["It's ejones17@cup.org.", "I'm fine.", "I'm 16.", "They're really nice.", "I'm from Los Angeles.", "It's 555-4448."];
+const prep = ['next to', 'on', 'in', 'under'];
+const jVerbs = ['get up', 'go out', 'live', 'rent', 'work'];
+const jForms = ['gets up', 'goes out', 'lives', 'rents', 'works', 'get up', 'go out', 'live', 'rent', 'work'];
+const jDo = ['Do', 'Does'];
+const jShort = ['do', 'does', "don't", "doesn't"];
+const oBox = ['Do you go out to a club or restaurant?', 'Do you go to a café?', 'I mean, can I use it after class?',
+  'I mean, do you ever eat out in this neighborhood?', 'Is it E-R-I-N?'];
+const abcd = ['A', 'B', 'C', 'D'];
+
+// Section J: three conversations, four blanks each: (a) Do/Does, (b) base verb, (c) short answer, (d) verb form.
+const jQ = n => [
+  { id: `J${n}a`, type: 'select', points: 1, text: `${n}(a) Do or Does?`, options: jDo },
+  { id: `J${n}b`, type: 'select', points: 1, text: `${n}(b) Which verb?`, options: jVerbs },
+  { id: `J${n}c`, type: 'select', points: 1, text: `${n}(c) Short answer`, options: jShort },
+  { id: `J${n}d`, type: 'select', points: 1, text: `${n}(d) Which verb form?`, options: jForms }
+];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'test1',
+  title: 'Written Test 1 (Units 1–6)',
+  total: 100,
+  sections: [
+    { letter: 'A', title: 'Listen to Paula and John talk about their classmate Ana. Choose the correct answers.',
+      audio: 'audio/test1-a.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. How does Ana get to class?', options: ['She goes by bus.', 'She drives.'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. Where is Ana before class usually?', options: ['At home', 'At work'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. Where does Ana live?', options: ['She lives near John.', 'She lives near Paula.'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. How often does Paula drive to school?', options: ['Three times a week', 'Every day'] }
+      ] },
+
+    { letter: 'B', title: 'Ben and Sandra are teachers. Listen to their conversation. Choose True or False for each sentence.',
+      audio: 'audio/test1-b.mp3',
+      questions: [
+        { id: 'B1', type: 'choice', points: 2, text: '1. Ben calls his daughter every day after she finishes work.', options: tf },
+        { id: 'B2', type: 'choice', points: 2, text: '2. Ben’s daughter gets home around 3:15.', options: tf },
+        { id: 'B3', type: 'choice', points: 2, text: '3. Sandra’s class starts at 4:30.', options: tf },
+        { id: 'B4', type: 'choice', points: 2, text: '4. Sandra’s class is next to the music room.', options: tf }
+      ] },
+
+    { letter: 'C', title: 'Complete the conversation. Use the words in the box. There is one extra word. Use capital letters where necessary.',
+      boxes: [
+        { title: 'Words', text: 'are    I’m    it’s    ’s    we’re    what’s    you’re' },
+        { title: 'Conversation', text:
+          'Lisa: Hey, Steve, this is my friend Adam. Adam (1) ______ from Vancouver.\n' +
+          'Steve: Hi, Adam. So, um, (2) ______ you here on vacation?\n' +
+          'Adam: No, (3) ______ a new student.\n' +
+          'Steve: Oh, really?\n' +
+          'Adam: Yeah. I start classes on Friday.\n' +
+          'Steve: What’s your first class?\n' +
+          'Adam: Uh, I have French with Mr. Martin.\n' +
+          'Steve: Hey, I have French with Mr. Martin on Friday. (4) ______ in the same class.\n' +
+          'Adam: That’s great.\n' +
+          'Steve: Yeah. . . . So, (5) ______ Vancouver like?\n' +
+          'Adam: Vancouver? I think (6) ______ a really fun city. Really beautiful.\n' +
+          'Steve: Uh-huh. . . .' }
+      ],
+      questions: [1, 2, 3, 4, 5, 6].map(n => ({ id: `C${n}`, type: 'select', points: 1, text: `Blank (${n})`, options: cBox })) },
+
+    { letter: 'D', title: 'Complete the conversation. Choose Me too or Me neither.',
+      boxes: [{ title: 'Conversation', text:
+        'Jessica: I think Johnny Depp is so good-looking.\n' +
+        'Marisa: (1) ______ . And he’s an amazing actor.\n' +
+        'Jessica: Yeah. I like his movie Pirates of the Caribbean.\n' +
+        'Marisa: (2) ______ . But you know, I don’t go to movies a lot these days.\n' +
+        'Jessica: (3) ______ . They’re so expensive.\n' +
+        'Marisa: I know! These days, I just watch movies online.\n' +
+        'Jessica: (4) ______ !' }],
+      questions: [1, 2, 3, 4].map(n => ({ id: `D${n}`, type: 'select', points: 1, text: `Blank (${n})`, options: meToo })) },
+
+    { letter: 'E', title: 'Choose the correct words.',
+      questions: [
+        { id: 'E1', type: 'select', points: 1, text: '1A. A: ___ a Yankees fan.', options: ["I'm", 'My'] },
+        { id: 'E2', type: 'select', points: 1, text: '1B. B: Really? ___ my favorite team.', options: ["They're", 'Their'] },
+        { id: 'E3', type: 'select', points: 1, text: '2A. A: ___ grandparents are from Canada.', options: ["We're", 'Our'] },
+        { id: 'E4', type: 'select', points: 1, text: '2B. B: Really? ___ mother is from Canada.', options: ["I'm", 'My'] },
+        { id: 'E5', type: 'select', points: 1, text: '3A. A: What’s ___ brother’s name?', options: ['your', "you're"] },
+        { id: 'E6', type: 'select', points: 1, text: '3B. B: ___ name is Ray.', options: ["He's", 'His'] }
+      ] },
+
+    { letter: 'F', title: 'Read each sentence. Choose the correct words.',
+      questions: [
+        { id: 'F1', type: 'select', points: 1, text: '1. I don’t like coffee. I ___ drink coffee.', options: ['always', 'usually', 'never'] },
+        { id: 'F2', type: 'select', points: 1, text: '2. My sister plays soccer every day after school. She ___ plays soccer.', options: ['often', 'hardly ever', 'never'] },
+        { id: 'F3', type: 'select', points: 1, text: '3. My dad goes on the Internet about once a month. He ___ goes on the Internet.', options: ['always', 'often', 'hardly ever'] },
+        { id: 'F4', type: 'select', points: 1, text: '4. My best friend goes to a club every Saturday. She ___ goes to a club on Saturday.', options: ['always', 'sometimes', 'hardly ever'] }
+      ] },
+
+    { letter: 'G', title: 'Match the questions and the answers. There is one extra answer.',
+      boxes: [{ title: 'Answers', text: gBox.join('\n') }],
+      questions: [
+        { id: 'G1', type: 'select', points: 1, text: '1. What’s your phone number?', options: gBox },
+        { id: 'G2', type: 'select', points: 1, text: '2. What’s your email address?', options: gBox },
+        { id: 'G3', type: 'select', points: 1, text: '3. Where are you from?', options: gBox },
+        { id: 'G4', type: 'select', points: 1, text: '4. How old are you?', options: gBox },
+        { id: 'G5', type: 'select', points: 1, text: '5. What are your parents like?', options: gBox }
+      ] },
+
+    { letter: 'H', title: 'Read the answers. Then complete the questions.',
+      intro: 'Example: A: How often do you eat out?  B: I usually eat out once or twice a week.',
+      questions: [
+        { id: 'H1', type: 'text', points: 2, text: '1. A: When ______ ?  B: My parents usually go out on the weekend.' },
+        { id: 'H2', type: 'text', points: 2, text: '2. A: Where ______ ?  B: I usually go out to a restaurant or club on Saturday nights.' },
+        { id: 'H3', type: 'text', points: 2, text: '3. A: What ______ ?  B: My girlfriend? She goes to the gym and exercises in her free time.' }
+      ] },
+
+    { letter: 'I', title: 'Look at the picture. Complete the answers with next to, on, in, or under.',
+      image: { src: 'img/test1-i.jpg', alt: 'A picture of a bedroom with a bed, a small table, a chair with a backpack, and other objects.' },
+      questions: [
+        { id: 'I1', type: 'select', points: 1, text: '1. A: Where’s the wastebasket?  B: It’s ___ the table.', options: prep },
+        { id: 'I2', type: 'select', points: 1, text: '2. A: Where are the umbrellas?  B: They’re ___ the chair.', options: prep },
+        { id: 'I3', type: 'select', points: 1, text: '3. A: Where’s the table?  B: It’s ___ the bed.', options: prep },
+        { id: 'I4', type: 'select', points: 1, text: '4. A: Where are the books?  B: They’re ___ the backpack.', options: prep }
+      ] },
+
+    { letter: 'J', title: 'Complete the questions and answers. Use the simple present and the verbs in the box. Use capital letters where necessary. There is one extra verb.',
+      intro: 'Example: A: Do you rent movies on the weekends?  B: Yes, I do. I rent movies a lot.',
+      boxes: [
+        { title: 'Verbs', text: 'get up    go out    live    rent    work' },
+        { title: 'Conversation 1', text: 'A: (a) ____ your mother (b) ____ at the mall?\nB: No, she (c) ____ . She (d) ____ in an office.' },
+        { title: 'Conversation 2', text: 'A: (a) ____ you and your friends ever (b) ____ after class?\nB: No, we (c) ____ . But we sometimes (d) ____ on the weekends.' },
+        { title: 'Conversation 3', text: 'A: (a) ____ your boyfriend (b) ____ around here?\nB: Yes, he (c) ____ . He (d) ____ next to the park.' }
+      ],
+      questions: [1, 2, 3].flatMap(jQ) },
+
+    { letter: 'K', title: 'Read each sentence. Choose the correct adjective.',
+      questions: [
+        { id: 'K1', type: 'select', points: 1, text: '1. My mother is very ___. She talks a lot, and she has a lot of friends.', options: ['outgoing', 'boring', 'shy'] },
+        { id: 'K2', type: 'select', points: 1, text: '2. My brother likes parties, and he often goes out. He has a lot of friends, too. He’s ___.', options: ['boring', 'fun', 'quiet'] },
+        { id: 'K3', type: 'select', points: 1, text: '3. My sister usually gets up late. She never does her homework, and she watches TV about five hours a day. She’s ___.', options: ['interesting', 'lazy', 'nice'] },
+        { id: 'K4', type: 'select', points: 1, text: '4. My best friend studies all the time. He takes a lot of classes, and he is very good in school. He’s very ___.', options: ['friendly', 'lazy', 'smart'] }
+      ] },
+
+    { letter: 'L', title: 'Choose the correct sentence to complete each conversation.',
+      questions: [
+        { id: 'L1', type: 'choice', points: 1, text: '1. A: Do you get up early?  B: Yeah, I get up at about 6:00. ___  A: I get up around 10:00 or 10:30!',
+          options: ['How about you?', 'Do you exercise before breakfast?', 'What time do you go to bed?'] },
+        { id: 'L2', type: 'choice', points: 1, text: '2. A: Hey, Miguel, what’s your last name?  B: Villegas.  A: ___',
+          options: ["What's the word for this in English?", 'How do you spell that?', "What's your first name?"] },
+        { id: 'L3', type: 'choice', points: 1, text: '3. A: My sister is an amazing singer.  B: ___ Is she in a band?  A: Yeah, she is. She sings at a club in the city.',
+          options: ['Well, I sing.', 'Thank you.', 'Really?'] },
+        { id: 'L4', type: 'choice', points: 1, text: '4. A: Sometimes I meet a friend for dinner after class.  B: Where do you go? ___  A: Do you know Ray’s Pizza? It’s great. I mean, the food’s really good.',
+          options: ['Is the breakfast good?', 'I mean, who do you usually hang out with?', 'I mean, do you go somewhere nice?'] }
+      ] },
+
+    { letter: 'M', title: 'Complete the sentences. Choose There’s or There are.',
+      questions: [
+        { id: 'M1', type: 'select', points: 1, text: '1. ___ no nice stores in my neighborhood.', options: ["There's", 'There are'] },
+        { id: 'M2', type: 'select', points: 1, text: '2. ___ a swimming pool near my house.', options: ["There's", 'There are'] },
+        { id: 'M3', type: 'select', points: 1, text: '3. ___ some fun cafés near the park.', options: ["There's", 'There are'] },
+        { id: 'M4', type: 'select', points: 1, text: '4. ___ no cafeteria in my office building.', options: ["There's", 'There are'] },
+        { id: 'M5', type: 'select', points: 1, text: '5. ___ a couple of interesting museums near here.', options: ["There's", 'There are'] }
+      ] },
+
+    { letter: 'N', title: 'Read each sentence. Choose the correct word.',
+      questions: [
+        { id: 'N1', type: 'select', points: 1, text: '1. On Monday afternoon, my sister ___ a computer class.', options: ['takes', 'goes', 'does'] },
+        { id: 'N2', type: 'select', points: 1, text: '2. On weekends, my brother ___ soccer.', options: ['plays', 'makes', 'goes'] },
+        { id: 'N3', type: 'select', points: 1, text: '3. In her free time, my mom ___ shopping.', options: ['goes', 'makes', 'takes'] },
+        { id: 'N4', type: 'select', points: 1, text: '4. I ___ phone calls in the evening.', options: ['do', 'make', 'have'] }
+      ] },
+
+    { letter: 'O', title: 'Complete each conversation. Add a second question from the box. Use each question only once. There is one extra question.',
+      boxes: [{ title: 'Questions', text: oBox.join('\n') }],
+      questions: [
+        { id: 'O1', type: 'select', points: 1, text: '1. A: Do you like the food around here? ___  B: No, I don’t. A lot of the restaurants in this neighborhood are very noisy.', options: oBox },
+        { id: 'O2', type: 'select', points: 1, text: '2. A: Can I borrow your dictionary? ___  B: No, I’m sorry. I need my dictionary.', options: oBox },
+        { id: 'O3', type: 'select', points: 1, text: '3. A: How do you spell your name? ___  B: Yeah, that’s right.', options: oBox },
+        { id: 'O4', type: 'select', points: 1, text: '4. A: What do you do in the evening? ___  B: I’m really busy. I usually work or have a class in the evening.', options: oBox }
+      ] },
+
+    { letter: 'P', title: 'Read the store signs. Then match the signs to the conversations. Choose A, B, C, or D. There is one extra sign.',
+      boxes: [
+        { title: 'A. Reader’s Choice Bookstore', text: 'Open Every Day\n9 a.m. – 10 p.m.' },
+        { title: 'B. Alberto’s Supermarket', text: 'Open Monday – Saturday\n8 a.m. – 9 p.m.\nOpen Sundays\n8 a.m. – 6 p.m.' },
+        { title: 'C. Harry’s Restaurant', text: 'Open Seven Days a Week\n12:00 – midnight' },
+        { title: 'D. Mario’s Shoe Place', text: 'Open Monday – Friday\n9 a.m. – 6 p.m.\nClosed Weekends' }
+      ],
+      questions: [
+        { id: 'P1', type: 'select', points: 2, text: '1. A: What time does it close?  B: At 6 p.m. Oh, wait, it closes at 6:00 on Sundays. The other days it closes at 9:00.', options: abcd },
+        { id: 'P2', type: 'select', points: 2, text: '2. A: What time does it open?  B: Well, um, it opens at 9 a.m. every day of the week.', options: abcd },
+        { id: 'P3', type: 'select', points: 2, text: '3. A: Let’s go here!  B: No, look, it’s not open on Sunday.', options: abcd }
+      ] },
+
+    { letter: 'Q', title: 'Read Greg’s email. Then choose True or False for each statement.',
+      boxes: [{ title: 'Email', text:
+        'FROM: Greg Evans\nTO: Erin Lee\nSUBJECT: Art class\nSENT: 11:48 p.m.\n\n' +
+        'Dear Erin,\n\n' +
+        'I’m sorry this email is so late! I never have any free time on Mondays! Yes, let’s meet and work on my paper for art class together tomorrow. But when?\n\n' +
+        'I’m really busy tomorrow, too. I work from 6:00 to 11:00. (I’m a server at Copper Café, and the breakfast hours are really crazy!) Then I have a chess club meeting from 12:00 to 1:30. But luckily, I don’t have my afternoon class tomorrow. My teacher has a meeting out of town. So let’s meet tomorrow at 2:00. Is that OK?\n\n' +
+        'My paper on the Louvre Museum needs a lot of work! There’s some great information about the Louvre on the Internet. (You speak French, right? Some of the web pages are in French, and I don’t understand them.) There’s a computer in Room A-13 at school, and it’s quiet there, too – there are usually only a couple of people in there. So let’s meet there and find the information. OK?\n\n' +
+        'By the way, can I borrow your notes from class on Friday?\n\n' +
+        'Thanks again for all the help!\n\n' +
+        'Call me! 212-555-0098\nGreg' }],
+      questions: [
+        { id: 'Q1', type: 'choice', points: 1, text: 'a. Greg isn’t busy on Mondays.', options: tf },
+        { id: 'Q2', type: 'choice', points: 1, text: 'b. Greg works on Tuesday mornings.', options: tf },
+        { id: 'Q3', type: 'choice', points: 1, text: 'c. Greg works until 10:00 at a restaurant.', options: tf },
+        { id: 'Q4', type: 'choice', points: 1, text: 'd. Greg is in a chess club.', options: tf },
+        { id: 'Q5', type: 'choice', points: 1, text: 'e. Greg has class at 2:00 tomorrow.', options: tf },
+        { id: 'Q6', type: 'choice', points: 1, text: 'f. Greg needs information about the Louvre for his paper.', options: tf },
+        { id: 'Q7', type: 'choice', points: 1, text: 'g. Greg doesn’t speak French.', options: tf },
+        { id: 'Q8', type: 'choice', points: 1, text: 'h. Room A-13 is usually very noisy.', options: tf },
+        { id: 'Q9', type: 'choice', points: 1, text: 'i. Greg asks Erin for an answer by email.', options: tf },
+        { id: 'Q10', type: 'choice', points: 1, text: 'j. Erin and Greg are in the same art class.', options: tf }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>
