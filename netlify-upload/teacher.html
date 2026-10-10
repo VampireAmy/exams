@@ -146,7 +146,8 @@ async function loadAll() {
 }
 
 const nameOf = uid => { const u = state.users.get(uid); return u ? (u.name || u.email) : 'Unknown student'; };
-const unitLabel = s => `${s.book.replace('touchstone', 'Touchstone ')} · Unit ${s.unit.replace('unit', '')}`;
+const unitLabel = s => `${s.book.replace('touchstone', 'Touchstone ')} · ` +
+  (s.unit.startsWith('test') ? `Written Test ${s.unit.replace('test', '')}` : `Unit ${s.unit.replace('unit', '')}`);
 const statusOf = s => s.released ? ['Released', 'ok'] : s.status === 'graded' ? ['Marked, not released', 'mid'] : ['Needs marking', 'wait'];
 const when = s => s.submittedAt?.toDate ? s.submittedAt.toDate().toLocaleString() : '';
 const accepted = a => String(a).split(' / ');
@@ -311,6 +312,13 @@ async function renderDetail(id) {
 
 /* ------------------------------------------------------------ routing */
 /* ------------------------------------------------------------ unlock view */
+const ITEMS = [
+  ...[1, 2, 3, 4, 5, 6].map(n => ({ key: `unit${n}`, label: `Unit ${n}` })),
+  { key: 'test1', label: 'Written Test 1', hint: 'Units 1–6', test: true },
+  ...[7, 8, 9, 10, 11, 12].map(n => ({ key: `unit${n}`, label: `Unit ${n}` })),
+  { key: 'test2', label: 'Written Test 2', hint: 'Units 7–12', test: true },
+  { key: 'test3', label: 'Written Test 3', hint: 'All 12 units', test: true }
+];
 const BOOKS = [['touchstone1', 'Touchstone 1'], ['touchstone2', 'Touchstone 2'], ['touchstone3', 'Touchstone 3'], ['touchstone4', 'Touchstone 4']];
 const ui = { uid: '', book: 'touchstone1' };
 
@@ -343,13 +351,13 @@ async function renderUnlocks(toast) {
     BOOKS.map(([id, label]) => h('option', { value: id, text: label, selected: id === ui.book })));
 
   const boxes = [];
-  const grid = h('div', { class: 'ugrid' }, Array.from({ length: 12 }, (_, i) => {
-    const unit = `unit${i + 1}`;
+  const grid = h('div', { class: 'ugrid' }, ITEMS.map(item => {
+    const unit = item.key;
     const sub = state.subs.find(s => s.uid === ui.uid && s.book === ui.book && s.unit === unit);
-    const cb = h('input', { type: 'checkbox', 'aria-label': `Unlock Unit ${i + 1}` });
+    const cb = h('input', { type: 'checkbox', 'aria-label': `Unlock ${item.label}` });
     cb.checked = current.has(`${ui.book}_${unit}`);
     boxes.push(cb);
-    return h('label', { class: 'ucell' }, cb, h('span', { class: 'un', text: `Unit ${i + 1}` }),
+    return h('label', { class: 'ucell' }, cb, h('span', { class: 'un', text: item.label }),
       sub ? h('span', { class: 'chip ok', text: sub.released ? 'Released' : 'Submitted' }) : null);
   }));
 
@@ -362,7 +370,7 @@ async function renderUnlocks(toast) {
     try {
       const ops = [];
       boxes.forEach((cb, i) => {
-        const unit = `unit${i + 1}`, k = `${ui.book}_${unit}`, id = `${ui.uid}_${k}`, was = current.has(k);
+        const unit = ITEMS[i].key, k = `${ui.book}_${unit}`, id = `${ui.uid}_${k}`, was = current.has(k);
         if (cb.checked && !was) ops.push(setDoc(doc(db, 'unlocks', id), { uid: ui.uid, book: ui.book, unit, unlockedAt: serverTimestamp() }));
         if (!cb.checked && was) ops.push(deleteDoc(doc(db, 'unlocks', id)));
       });
