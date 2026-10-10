@@ -196,7 +196,7 @@ const UNIT_COUNT = 12;
 const EXAM_MARKER = ['data', 'touchstone', 'exam'].join('-');
 
 const $ = s => document.querySelector(s);
-const state = { uid: null, book: null, subs: new Map(), token: 0 };
+const state = { uid: null, book: null, subs: new Map(), unlocks: new Set(), token: 0 };
 
 /* ------------------------------------------------------------------ auth UI */
 let mode = 'signin';
@@ -308,7 +308,15 @@ function examExists(book, n) {
 
 async function loadSubmissions(uid) {
   state.subs = new Map();
+  state.unlocks = new Set();
   $('#loadMsg').textContent = '';
+  try {
+    const u = await getDocs(query(collection(db, 'unlocks'), where('uid', '==', uid)));
+    u.forEach(d => { const x = d.data(); state.unlocks.add(`${x.book}_${x.unit}`); });
+  } catch (err) {
+    console.error(err);
+    $('#loadMsg').textContent = 'Your quiz list couldn’t be fully loaded. Check your connection, or ask your teacher to check the Firestore rules.';
+  }
   try {
     const snap = await getDocs(query(collection(db, 'submissions'), where('uid', '==', uid)));
     snap.forEach(d => {
@@ -346,9 +354,12 @@ async function showBook(id) {
     const sub = state.subs.get(`${id}_${unitKey}`);
     const li = document.createElement('li');
 
+    const locked = exists && !sub && !state.unlocks.has(`${id}_${unitKey}`);
     let chip = '', action = 'Start', cls = 'ok';
     if (!exists) {
       chip = 'Coming soon'; cls = 'soon'; action = '';
+    } else if (locked) {
+      chip = 'Locked'; cls = 'soon'; action = '';
     } else if (sub && sub.released) {
       const score = typeof sub.score === 'number' ? ` · ${sub.score}/${sub.total ?? 50}` : '';
       chip = 'Reviewed' + score; cls = 'ok'; action = 'See results';
@@ -356,9 +367,10 @@ async function showBook(id) {
       chip = 'Waiting for review'; cls = 'wait'; action = 'View';
     }
 
-    const el = document.createElement(exists ? 'a' : 'div');
-    el.className = 'unit' + (exists ? '' : ' off');
-    if (exists) el.href = `${id}/${unitKey}.html`;
+    const open = exists && !locked;
+    const el = document.createElement(open ? 'a' : 'div');
+    el.className = 'unit' + (open ? '' : ' off');
+    if (open) el.href = `${id}/${unitKey}.html`;
     el.innerHTML = '<span class="u"></span><span class="chip"></span><span class="act"></span>';
     el.querySelector('.u').textContent = `Unit ${n}`;
     const chipEl = el.querySelector('.chip');
