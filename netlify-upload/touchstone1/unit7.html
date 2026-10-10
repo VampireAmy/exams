@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 7 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const pdg  = ['playing', 'doing', 'going'];
+const pdg2 = ['play', 'do', 'go'];
+const pdg3 = ['plays', 'does', 'goes'];
+const box  = ['Are you enjoying your vacation?', 'Do you like surfing?', 'What are you studying?', 'Do you like Hawaii?', "How's it going?"];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit7',
+  title: 'Unit 7 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Bill is calling Meg. Listen to the conversation. Choose the correct answers.',
+      audio: 'audio/unit7.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. Meg is in San Francisco ___.', options: ['on vacation', 'for work', 'for school'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. Meg is staying ___.', options: ['at a hotel', 'with friends', 'with her brother'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. Meg goes to yoga class every ___.', options: ['morning', 'afternoon', 'night'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. The weather in San Francisco is ___.', options: ['cloudy', 'cold', 'sunny'] }
+      ] },
+
+    { letter: 'B', title: 'Complete the phone message. Use the present continuous of the verbs in parentheses. Use contractions where possible.',
+      boxes: [{ text: 'Hi, Rick. This is Jennifer. I (1)______ (call) from home. I hope you (2)______ (not work) today. My friend Alicia (3)______ (visit) from Los Angeles. It (4)______ (rain) and cold, so we (5)______ (not go) out. Do you want to come over? Give me a call.' }],
+      questions: [
+        { id: 'B1', type: 'text', points: 2, text: '(1) call' },
+        { id: 'B2', type: 'text', points: 2, text: '(2) not work' },
+        { id: 'B3', type: 'text', points: 2, text: '(3) visit' },
+        { id: 'B4', type: 'text', points: 2, text: '(4) rain' },
+        { id: 'B5', type: 'text', points: 2, text: '(5) not go' }
+      ] },
+
+    { letter: 'C', title: 'Write questions with the present continuous.',
+      questions: [
+        { id: 'C1', type: 'text', points: 2, text: '1. (you / get / enough sleep / these days)' },
+        { id: 'C2', type: 'text', points: 2, text: '2. (how much / your brother / study / this semester)' },
+        { id: 'C3', type: 'text', points: 2, text: '3. (what / your parents / do / right now)' },
+        { id: 'C4', type: 'text', points: 2, text: '4. (you / spend / a lot of time / with your friends / this month)' },
+        { id: 'C5', type: 'text', points: 2, text: '5. (your best friend / play / any sports / this year)' }
+      ] },
+
+    { letter: 'D', title: 'Choose the correct words.',
+      questions: [
+        { id: 'D1', type: 'choice', points: 1, text: '1. Anita is ___ basketball this season.', options: pdg },
+        { id: 'D2', type: 'choice', points: 1, text: '2. We usually ___ bowling on Saturday night.', options: pdg2 },
+        { id: 'D3', type: 'choice', points: 1, text: '3. I ___ aerobics every Monday, Wednesday, and Friday.', options: pdg2 },
+        { id: 'D4', type: 'choice', points: 1, text: '4. My brothers aren’t ___ karate this fall.', options: pdg },
+        { id: 'D5', type: 'choice', points: 1, text: '5. My sister ___ running in the park twice a week.', options: pdg3 },
+        { id: 'D6', type: 'choice', points: 1, text: '6. I’m not ___ soccer this year.', options: pdg }
+      ] },
+
+    { letter: 'E', title: 'Complete the conversation with the questions in the box. Use each question only once. There is one extra question.',
+      boxes: [
+        { title: 'Questions', text: box.join('\n') },
+        { title: 'Conversation', text:
+          'Olivia: Hey, Ben, this is my friend Marissa.\n' +
+          'Ben: Hi, Marissa. Nice to meet you. Are you here on vacation?\n' +
+          'Marissa: No, I’m here for school.\n' +
+          'Ben: Really? (1)\n' +
+          'Marissa: I’m studying law.\n' +
+          'Ben: That’s cool. (2)\n' +
+          'Marissa: The classes are hard, but I’m enjoying school.\n' +
+          'Ben: That’s great! (3)\n' +
+          'Marissa: Oh, yes, it’s a wonderful island! It’s my first time here. The weather’s great, and I really love the beaches.\n' +
+          'Ben: I know! I spend a lot of time at the beach. (4)\n' +
+          'Marissa: Yes! Actually, I’m taking lessons!' }
+      ],
+      questions: [
+        { id: 'E1', type: 'select', points: 2, text: 'Blank (1)', options: box },
+        { id: 'E2', type: 'select', points: 2, text: 'Blank (2)', options: box },
+        { id: 'E3', type: 'select', points: 2, text: 'Blank (3)', options: box },
+        { id: 'E4', type: 'select', points: 2, text: 'Blank (4)', options: box }
+      ] },
+
+    { letter: 'F', title: 'Read the advertisements. Then correct the false statements.',
+      intro: 'Each statement has one wrong piece of information. Rewrite the whole sentence with the correct information. Example: “Call All Sun Vacations for a vacation in Canada.” becomes “Call All Sun Vacations for a vacation in Mexico.”',
+      boxes: [
+        { title: 'The All Sun Vacation', text:
+          'Are you feeling tired this winter? Is it cold and rainy, and do you need some sun?\n\n' +
+          'Well, how about a beach vacation in Mexico? It’s hot and sunny here in the winter. Come and join us. Go swimming and scuba diving, and play beach volleyball! Or just relax on the beach. Don’t wait.\n\n' +
+          'Call All Sun Vacations at 689-555-1029. Ask about our vacations in the sun!' },
+        { title: 'The Winter Fun Vacation', text:
+          'Do you like snow? Do you enjoy skiing? Then Canada is the perfect place for your next winter vacation. It’s sunny, snowy, and beautiful!\n\n' +
+          'During the day, ski or walk in the snow. It’s great exercise! In the evening, relax in the hotel or go to the theater.\n\n' +
+          'Come and enjoy! Call Winter Fun Vacations at 689-555-0093.' }
+      ],
+      questions: [
+        { id: 'F1', type: 'text', points: 2, text: '1. It’s hot and humid in Mexico in the winter.' },
+        { id: 'F2', type: 'text', points: 2, text: '2. On the All Sun Vacation, people go swimming and skiing.' },
+        { id: 'F3', type: 'text', points: 2, text: '3. Canada is a great place to play beach volleyball or walk in the snow.' },
+        { id: 'F4', type: 'text', points: 2, text: '4. On the Winter Fun Vacation, people relax on the beach or go to the theater in the evening.' }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

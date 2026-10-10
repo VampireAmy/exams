@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 3 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const dBox = ['She’s 72.', 'They’re interesting.', 'They’re fine, thanks.', 'Diana.', 'Sonia and Carlos.']
+  .map(s => s.replace('’', "'"));
+const tree = ['brother', 'father', 'grandfather', 'grandmother', 'mother'];
+const order = ['1', '2', '3'];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit3',
+  title: 'Unit 3 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'John and Dana are looking at photos. Listen and choose the correct answers.',
+      audio: 'audio/unit3.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. Who’s Emma?', options: ['Dana’s sister', 'Dana’s friend', 'Dana’s co-worker'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. Where’s Emma from originally?', options: ['London', 'Miami', 'San Diego'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. How old is Laura?', options: ['Twenty', 'Twenty-one', 'Twenty-two'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. What’s Laura like?', options: ['She’s shy.', 'She’s outgoing.', 'She’s amazing.'] }
+      ] },
+
+    { letter: 'B', title: 'Put the words in the correct order to make questions. Then complete the answer to each question.',
+      intro: 'Example: (tired / is / she)  A: Is she tired?  B: Yes, she is.',
+      questions: [
+        { id: 'B1', type: 'text', points: 2, text: '1A. (the computer / new / is)  A: ______ ?' },
+        { id: 'B2', type: 'text', points: 2, text: '1B. No, ______ .' },
+        { id: 'B3', type: 'text', points: 2, text: '2A. (your co-workers / are / nice)  A: ______ ?' },
+        { id: 'B4', type: 'text', points: 2, text: '2B. Yes, ______ .' },
+        { id: 'B5', type: 'text', points: 2, text: '3A. (I / am / for class / late)  A: ______ ?' },
+        { id: 'B6', type: 'text', points: 2, text: '3B. No, ______ .' }
+      ] },
+
+    { letter: 'C', title: 'Choose the correct words.',
+      questions: [
+        { id: 'C1', type: 'select', points: 1, text: '1A. A: ___ a Giants fan.', options: ["I'm", 'My'] },
+        { id: 'C2', type: 'select', points: 1, text: '1B. B: Really? My parents are Giants fans. It’s ___ favorite team.', options: ["they're", 'their'] },
+        { id: 'C3', type: 'select', points: 1, text: '2A. A: ___ from Florida.', options: ["We're", 'Our'] },
+        { id: 'C4', type: 'select', points: 1, text: '2B. B: Florida? ___ from Florida, too.', options: ["I'm", 'My'] },
+        { id: 'C5', type: 'select', points: 1, text: '3A. A: How old is ___ brother?', options: ['your', "you're"] },
+        { id: 'C6', type: 'select', points: 1, text: '3B. B: ___ 27.', options: ["He's", 'His'] }
+      ] },
+
+    { letter: 'D', title: 'Match the questions and the answers. There is one extra answer.',
+      questions: [
+        { id: 'D1', type: 'select', points: 1, text: '1. How are your sister and brother?', options: dBox },
+        { id: 'D2', type: 'select', points: 1, text: '2. What are your parents like?', options: dBox },
+        { id: 'D3', type: 'select', points: 1, text: '3. What are their names?', options: dBox },
+        { id: 'D4', type: 'select', points: 1, text: '4. How old is your grandma?', options: dBox }
+      ] },
+
+    { letter: 'E', title: 'Complete the family tree with the words in the box. Use each word only once.',
+      boxes: [{ title: 'Words', text: tree.join('\n') }],
+      image: { src: 'img/unit3-e.png', alt: 'A blank family tree. Two ovals at the top, two boxes in the middle, and two shapes at the bottom. The bottom left shape says "me".' },
+      questions: [
+        { id: 'E1', type: 'select', points: 1, text: 'Top left oval', options: tree },
+        { id: 'E2', type: 'select', points: 1, text: 'Top right oval', options: tree },
+        { id: 'E3', type: 'select', points: 1, text: 'Middle left box', options: tree },
+        { id: 'E4', type: 'select', points: 1, text: 'Middle right box', options: tree },
+        { id: 'E5', type: 'select', points: 1, text: 'Bottom right shape (next to “me”)', options: tree }
+      ] },
+
+    { letter: 'F', title: 'Complete the conversations. Write a negative statement with a pronoun (I, you, he, she, it, we, they). Use the words in parentheses.',
+      intro: 'Example: A: How’s your French class? B: It’s not easy. (easy)',
+      questions: [
+        { id: 'F1', type: 'text', points: 2, text: '1. A: What are your co-workers like?  B: ______ . (friendly)' },
+        { id: 'F2', type: 'text', points: 2, text: '2. A: Where’s your father today?  B: I don’t know. ______ . (at home)' },
+        { id: 'F3', type: 'text', points: 2, text: '3. A: I’m a big Alicia Keys fan. What’s her new album like?  B: ______ . (very good)' }
+      ] },
+
+    { letter: 'G', title: 'Make conversations. Choose 1, 2, or 3 to put the sentences in the correct order.',
+      intro: 'Example: 2 His name’s Phong. / 3 Phong? Where’s he from? / 1 Who’s your best friend?',
+      questions: [
+        { id: 'G1', type: 'select', points: 1, text: '1. “Really? What about your boss?”', options: order },
+        { id: 'G2', type: 'select', points: 1, text: '1. “My new co-workers are nice.”', options: order },
+        { id: 'G3', type: 'select', points: 1, text: '1. “She’s great. And she’s not very strict.”', options: order },
+        { id: 'G4', type: 'select', points: 1, text: '2. “My favorite player is Sergio Agüero.”', options: order },
+        { id: 'G5', type: 'select', points: 1, text: '2. “I’m a soccer fan.”', options: order },
+        { id: 'G6', type: 'select', points: 1, text: '2. “Soccer? Really? Who’s your favorite player?”', options: order },
+        { id: 'G7', type: 'select', points: 1, text: '3. “Where are you from?”', options: order },
+        { id: 'G8', type: 'select', points: 1, text: '3. “Miami? Really? I’m from Miami, too.”', options: order },
+        { id: 'G9', type: 'select', points: 1, text: '3. “I’m from Miami.”', options: order }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

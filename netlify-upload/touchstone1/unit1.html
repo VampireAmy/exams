@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 1 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const eBox = ['Good night.', 'Hi. How are you?', "I'm fine, thanks.", 'Nice to meet you.', 'OK. Have a good day.', 'Thanks. You too.'];
+const gBox = ['Cell phone number', 'Email address', 'ID number', 'Last name', 'Nickname'];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit1',
+  title: 'Unit 1 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Listen to the four conversations. Choose the correct answers.',
+      audio: 'audio/unit1.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. David is ___.', options: ['a new student', 'Mary’s friend', 'the teacher'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. What’s Linh’s last name?', options: ['Nguyan', 'Nguyen', 'Njuyen'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. The French class is in Room ___.', options: ['3', 'B', 'K'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. What’s Liz’s nickname?', options: ['Lizzie', 'Yoshida', 'Yo-yo'] }
+      ] },
+
+    { letter: 'B', title: 'Complete the conversations. Write am, ’m, are, or ’re. Use contractions when possible. Add not where necessary. Use capital letters where necessary.',
+      questions: [
+        { id: 'B1', type: 'text', points: 2, text: '1A. A: We ______ here for the concert. How about you?' },
+        { id: 'B2', type: 'text', points: 2, text: '1B. B: Yeah, I ______, too.' },
+        { id: 'B3', type: 'text', points: 2, text: '2A. A: ______ I in your class?' },
+        { id: 'B4', type: 'text', points: 2, text: '2B. B: No, you ______. You’re in Class 6.' },
+        { id: 'B5', type: 'text', points: 2, text: '3A. A: ______ you Ellen?' },
+        { id: 'B6', type: 'text', points: 2, text: '3B. B: No, I’m not. I ______ Rachel.' },
+        { id: 'B7', type: 'text', points: 2, text: '4A. A: ______ you a gym member?' },
+        { id: 'B8', type: 'text', points: 2, text: '4B. B: No. I ______ a member.' }
+      ] },
+
+    { letter: 'C', title: 'Write questions for the answers. Use the words in the box.',
+      intro: 'Example: A: What’s your first name? B: Jenny.',
+      boxes: [{ title: 'Words', text: 'email address\nfirst name\nlast name\nphone number\nteacher’s name' }],
+      questions: [
+        { id: 'C1', type: 'text', points: 2, text: '1. A: ______? B: It’s Rodgers. I’m John Rodgers.' },
+        { id: 'C2', type: 'text', points: 2, text: '2. A: ______? B: It’s 212-555-3204.' },
+        { id: 'C3', type: 'text', points: 2, text: '3. A: ______? B: It’s jal044@cup.org.' },
+        { id: 'C4', type: 'text', points: 2, text: '4. A: ______? B: Mr. Barton.' }
+      ] },
+
+    { letter: 'D', title: 'Choose the correct answers.',
+      questions: [
+        { id: 'D1', type: 'choice', points: 1, text: '1. I’m David Smith. I’m Catherine’s husband. I’m ___.', options: ['Mr. Smith', 'Mrs. Smith', 'Ms. Smith'] },
+        { id: 'D2', type: 'choice', points: 1, text: '2. I’m Alicia Gomez. I’m married. I’m ___.', options: ['Mrs. Gomez', 'Miss Gomez', 'Mr. Gomez'] },
+        { id: 'D3', type: 'choice', points: 1, text: '3. I’m Elizabeth Maria Silva. My ___ name is Maria.', options: ['first', 'middle', 'last'] }
+      ] },
+
+    { letter: 'E', title: 'Complete the conversations. Use the expressions in the box. There is one extra expression.',
+      boxes: [{ title: 'Expressions', text: eBox.join('\n') }],
+      questions: [
+        { id: 'E1', type: 'select', points: 1, text: '1. A: Hey, Sarah. How are you?  B: ___', options: eBox },
+        { id: 'E2', type: 'select', points: 1, text: '2. A: Hi. I’m Dan.  B: ___', options: eBox },
+        { id: 'E3', type: 'select', points: 1, text: '3. A: Good morning.  B: ___', options: eBox },
+        { id: 'E4', type: 'select', points: 1, text: '4. A: See you later.  B: ___', options: eBox },
+        { id: 'E5', type: 'select', points: 1, text: '5. A: Good-bye. Have a nice day.  B: ___', options: eBox }
+      ] },
+
+    { letter: 'F', title: 'One part of each sentence means “How about you?” Replace that part with “How about you?” and write the new sentence.',
+      intro: 'Example: A: Are you here for an English class? B: Yes. Are you here for an English class, too? becomes B: Yes. How about you?',
+      questions: [
+        { id: 'F1', type: 'text', points: 2, text: '1. A: I’m here for the computer class. Are you here for the class, too?' },
+        { id: 'F2', type: 'text', points: 2, text: '2. B: No, I’m here on vacation. Are you a student?' },
+        { id: 'F3', type: 'text', points: 2, text: '3. B: I’m new here. Are you?' }
+      ] },
+
+    { letter: 'G', title: 'Look at the form. Then write the missing expressions. There is one extra expression.',
+      boxes: [
+        { title: 'Expressions', text: gBox.join('\n') },
+        { title: 'Westside Language School', text:
+          'Ms. Brower, Class information\nName: Allen Thomas Martin\n' +
+          '(1) ______ : Al\n(2) ______ : 607-555-9980\n(3) ______ : martin.a@cup.org\n(4) ______ : 90846ED2' }
+      ],
+      questions: [
+        { id: 'G1', type: 'select', points: 1, text: '(1) Al', options: gBox },
+        { id: 'G2', type: 'select', points: 1, text: '(2) 607-555-9980', options: gBox },
+        { id: 'G3', type: 'select', points: 1, text: '(3) martin.a@cup.org', options: gBox },
+        { id: 'G4', type: 'select', points: 1, text: '(4) 90846ED2', options: gBox }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

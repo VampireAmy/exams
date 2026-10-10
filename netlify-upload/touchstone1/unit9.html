@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 9 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const tf = ['True', 'False'];
+const bBox = ["Let's go this afternoon.", 'You can see the Statue of Liberty.', 'Yes. There are usually a lot of seats.',
+  'Actually, you can see it from the restaurant in your hotel.', 'No. We can eat at 9:00.'];
+const canForms = ['can', "can't", 'Can', "Can't"];
+const verbs = ['visit', 'go', 'get', 'find', 'take', 'drive'];
+const kind = ['a kind of', 'kind of like'];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit9',
+  title: 'Unit 9 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Listen to Kayo and Nick talk. Choose True or False for each sentence.',
+      audio: 'audio/unit9.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. There’s only one good Greek restaurant in the city.', options: tf },
+        { id: 'A2', type: 'choice', points: 2, text: '2. Nick can speak a little Greek.', options: tf },
+        { id: 'A3', type: 'choice', points: 2, text: '3. Nick can play the guitar.', options: tf },
+        { id: 'A4', type: 'choice', points: 2, text: '4. Nick plays in a band at a Greek restaurant.', options: tf }
+      ] },
+
+    { letter: 'B', title: 'Match the questions and the answers. There is one extra answer.',
+      boxes: [{ title: 'Answers', text: bBox.join('\n') }],
+      questions: [
+        { id: 'B1', type: 'select', points: 1, text: '1. What can you see from the top of the Empire State Building?', options: bBox },
+        { id: 'B2', type: 'select', points: 1, text: '2. When can we see a show?', options: bBox },
+        { id: 'B3', type: 'select', points: 1, text: '3. Where can you get a view of the city?', options: bBox },
+        { id: 'B4', type: 'select', points: 1, text: '4. Can we take the bus tour at 10:00 today?', options: bBox }
+      ] },
+
+    { letter: 'C', title: 'Complete the questions and answers. Use can or can’t and the verbs in parentheses. Use capital letters where necessary.',
+      boxes: [
+        { title: 'Conversation 1', text: 'A: What kinds of museums (a) ____ you (b) ____ (visit) in your city?\nB: You (c) ____ (d) ____ (go) to history museums – like the Museum of Peruvian History.' },
+        { title: 'Conversation 2', text: 'A: (a) ____ you (b) ____ (get) good Chinese food in this neighborhood?\nB: No, you (c) ____ (d) ____ (find) good Chinese food around here. But there’s good Mexican food.' },
+        { title: 'Conversation 3', text: 'A: (a) ____ you (b) ____ (take) a ferry to the island?\nB: No, but you (c) ____ (d) ____ (drive) there. There’s a bridge.' }
+      ],
+      questions: [
+        ['1', 'can', 'visit', 'can', 'go'],
+        ['2', 'Can', 'get', "can't", 'find'],
+        ['3', 'Can', 'take', 'can', 'drive']
+      ].flatMap(([n]) => [
+        { id: `C${n}a`, type: 'select', points: 1, text: `${n}(a) can or can’t?`, options: canForms },
+        { id: `C${n}b`, type: 'select', points: 1, text: `${n}(b) Which verb?`, options: verbs },
+        { id: `C${n}c`, type: 'select', points: 1, text: `${n}(c) can or can’t?`, options: canForms },
+        { id: `C${n}d`, type: 'select', points: 1, text: `${n}(d) Which verb?`, options: verbs }
+      ]) },
+
+    { letter: 'D', title: 'Complete the sentences with countries, nationalities, or languages.',
+      intro: 'Example: My best friend is Canadian, but she doesn’t live in Canada. She lives in Brazil.',
+      questions: [
+        { id: 'D1', type: 'text', points: 2, text: '1. My father is from Turkey, but he can’t speak ______ .' },
+        { id: 'D2', type: 'text', points: 2, text: '2. My favorite ______ candy store is near here. They have delicious chocolate from France.' },
+        { id: 'D3', type: 'text', points: 2, text: '3. My best friend is from Germany, but she doesn’t like ______ music.' },
+        { id: 'D4', type: 'text', points: 2, text: '4. I love Chinese silk, but this silk isn’t from ______ .' }
+      ] },
+
+    { letter: 'E', title: 'Complete the conversation. Choose a kind of or kind of like.',
+      boxes: [{ title: 'Conversation', text:
+        'Server: Are you ready to order?\n' +
+        'Michi: Yes. Can I have the blini, please?\n' +
+        'Server: Sure. OK.\n' +
+        'Ray: Um, what’s blini?\n' +
+        'Michi: It’s (1) ______ Russian food.\n' +
+        'Server: Yes, it’s Russian. It’s (2) ______ a pancake.\n' +
+        'Ray: Sounds interesting. Can I have the blini, too, please?\n' +
+        'Server: OK, then, two blini. And what do you want to drink?\n' +
+        'Michi: Can I get a café au lait, please?\n' +
+        'Server: Sure.\n' +
+        'Ray: Sorry. What’s a café au lait?\n' +
+        'Server: It’s (3) ______ coffee drink.\n' +
+        'Michi: Yes. It’s coffee with milk.\n' +
+        'Ray: Sounds good. Café au lait for me, too, please.\n' +
+        'Server: OK. Thanks.\n' +
+        'Ray: This place is (4) ______ a European café.\n' +
+        'Michi: Yeah, it’s my favorite place for coffee and a snack.' }],
+      questions: [
+        { id: 'E1', type: 'select', points: 2, text: 'Blank (1)', options: kind },
+        { id: 'E2', type: 'select', points: 2, text: 'Blank (2)', options: kind },
+        { id: 'E3', type: 'select', points: 2, text: 'Blank (3)', options: kind },
+        { id: 'E4', type: 'select', points: 2, text: 'Blank (4)', options: kind }
+      ] },
+
+    { letter: 'F', title: 'Read the page from a travel guide. Then write short answers to the questions.',
+      boxes: [{ title: 'Tour of Istanbul (three hours)', text:
+        'This tour starts at the Istanbul Hotel, in the European part of the city. Istanbul sits on two continents – Europe and Asia. So, first, you can walk over the Galata Bridge and get an amazing view of these two regions. Then visit the Topkapi Palace. This was the palace of many sultans, but these days, it’s a museum. At the palace, you can look at the exhibits of art, jewelry, and traditional clothes of the sultan. Next, go shopping in the Grand Bazaar. It’s like a shopping mall, but it’s old and historic. You can buy a million things in the Grand Bazaar – spices, clothes, carpets, and souvenirs! Finally, enjoy some Turkish tea and coffee outside at a café and meet visitors from around the world.\n\n' +
+        'Tours available in two languages:\nEnglish: 9:00 a.m. to 1:00 p.m. / Turkish: 12:00 to 3:00 p.m.' }],
+      questions: [
+        { id: 'F1', type: 'text', points: 2, text: '1. Where does the tour start?' },
+        { id: 'F2', type: 'text', points: 2, text: '2. What is the first place on the tour?' },
+        { id: 'F3', type: 'text', points: 2, text: '3. What can you see at the Topkapi Palace?' },
+        { id: 'F4', type: 'text', points: 2, text: '4. What is the last stop on the tour?' },
+        { id: 'F5', type: 'text', points: 2, text: '5. What time does the English tour end?' }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

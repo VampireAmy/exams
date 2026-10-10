@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 11 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const was = ['was', "wasn't", 'were', "weren't"];
+const dBox = ['got a bad sunburn', 'got his autograph', 'went on a road trip', 'went to see', 'got a new camera', 'got sick', 'went hiking'];
+const eBox = ['Did you play any sports last summer?', 'How did you like your lessons?', 'What did you do?', 'What sports did you play with your son?'];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit11',
+  title: 'Unit 11 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Chris just got back from vacation. Listen and choose the correct answers.',
+      audio: 'audio/unit11.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. Chris got back from vacation ___.', options: ['on Saturday', 'yesterday'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. Chris was on vacation with two friends from ___.', options: ['Los Angeles', 'college'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. Chris took ___ lessons.', options: ['swimming', 'scuba-diving'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. Carmen ___ last week.', options: ['had a party', 'worked late'] }
+      ] },
+
+    { letter: 'B', title: 'Complete the paragraph. Choose was, wasn’t, were, or weren’t.',
+      boxes: [{ text: 'I remember my first swimming lesson. I (1) ______ very old – only five – and I (2) ______ very scared. I didn’t want to go in the water! I think the other kids (3) ______ nervous, too. But the teacher, Ms. Peterson, (4) ______ very nice. We loved her, but the swimming didn’t go very well. We (5) ______ very good at first, but Ms. Peterson (6) ______ a wonderful teacher.' }],
+      questions: [
+        { id: 'B1', type: 'select', points: 2, text: 'Blank (1)', options: was },
+        { id: 'B2', type: 'select', points: 2, text: 'Blank (2)', options: was },
+        { id: 'B3', type: 'select', points: 2, text: 'Blank (3)', options: was },
+        { id: 'B4', type: 'select', points: 2, text: 'Blank (4)', options: was },
+        { id: 'B5', type: 'select', points: 2, text: 'Blank (5)', options: was },
+        { id: 'B6', type: 'select', points: 2, text: 'Blank (6)', options: was }
+      ] },
+
+    { letter: 'C', title: 'Write the questions for the answers.',
+      intro: 'Example: A: How was your vacation?  B: My vacation? It was fun!',
+      questions: [
+        { id: 'C1', type: 'text', points: 2, text: '1. A: ______ ?  B: We went to San Francisco.' },
+        { id: 'C2', type: 'text', points: 2, text: '2. A: ______ ?  B: I went with my family.' },
+        { id: 'C3', type: 'text', points: 2, text: '3. A: ______ ?  B: It was rainy, but warm.' },
+        { id: 'C4', type: 'text', points: 2, text: '4. A: ______ ?  B: We were there for a week.' },
+        { id: 'C5', type: 'text', points: 2, text: '5. A: ______ ?  B: We saw the Golden Gate Bridge, Chinatown – all the sights!' }
+      ] },
+
+    { letter: 'D', title: 'Complete the sentences. Use each expression in the box only once. There is one extra expression.',
+      boxes: [{ title: 'Expressions', text: dBox.join('\n') }],
+      questions: [
+        { id: 'D1', type: 'select', points: 1, text: 'A. I (1) ___ a play last weekend.', options: dBox },
+        { id: 'D2', type: 'select', points: 1, text: 'A. After the show, I met the lead actor and (2) ___ .', options: dBox },
+        { id: 'D3', type: 'select', points: 1, text: 'B. Yesterday, I (3) ___ with my friends. It was great, but it was really hot and sunny.', options: dBox },
+        { id: 'D4', type: 'select', points: 1, text: 'B. I (4) ___ .', options: dBox },
+        { id: 'D5', type: 'select', points: 1, text: 'C. I (5) ___ across the U.S. with my brother. It was awful.', options: dBox },
+        { id: 'D6', type: 'select', points: 1, text: 'C. We both (6) ___ ! We had to stop and stay in bed for three days!', options: dBox }
+      ] },
+
+    { letter: 'E', title: 'Complete the conversation with the questions in the box. Use each question only once. There is one extra question.',
+      boxes: [
+        { title: 'Questions', text: eBox.join('\n') },
+        { title: 'Conversation', text:
+          'A: What did you do this weekend?\n' +
+          'B: I went to a party with some friends. It was nice. (1) ______\n' +
+          'A: Well, I took my first ski lesson.\n' +
+          'B: Oh, yeah? I took ski lessons this winter, too. Did you enjoy it?\n' +
+          'A: It was OK. I don’t really like cold weather. (2) ______\n' +
+          'B: Oh, I loved them. I took lessons with my son. He loves the snow and winter sports.\n' +
+          'A: Really? I think I like warm weather.\n' +
+          'B: Oh, so you like summer sports. Did you . . . um . . . play tennis a lot last summer?\n' +
+          'A: Yeah! I played every week. How about you? (3) ______\n' +
+          'B: Yeah, I did. I played golf pretty often. My son plays, too.' }
+      ],
+      questions: [
+        { id: 'E1', type: 'select', points: 2, text: 'Blank (1)', options: eBox },
+        { id: 'E2', type: 'select', points: 2, text: 'Blank (2)', options: eBox },
+        { id: 'E3', type: 'select', points: 2, text: 'Blank (3)', options: eBox }
+      ] },
+
+    { letter: 'F', title: 'Read the story. Then write short answers to the questions.',
+      boxes: [{ title: 'A funny thing happened', text:
+        'A FUNNY THING HAPPENED TO MY SISTER Tina last month. She lives in Japan and teaches English. In Japan, people don’t usually wear their outdoor shoes in the house or in school. So her school, like a lot of buildings, has a special place for shoes – a shoe box.\n\n' +
+        'Tina teaches English in the evening. One Friday, she went to school, and she put her shoes in the shoe box – as usual. After class, she got ready to leave, but her shoes weren’t in the box. There was only one pair of shoes there, and they weren’t her shoes! But she needed to get home, so she put on the shoes and left.\n\n' +
+        'On Monday, at her next English class, her shoes were in a shopping bag on her desk! There was a note that said, “I’m so sorry. I took your shoes by mistake!” But there was no name on the note. Somebody was very embarrassed!' }],
+      questions: [
+        { id: 'F1', type: 'text', points: 2, text: '1. When does Tina teach English?' },
+        { id: 'F2', type: 'text', points: 2, text: '2. Where did Tina put her shoes on Friday?' },
+        { id: 'F3', type: 'text', points: 2, text: '3. After class, how many pairs of shoes were in the box?' },
+        { id: 'F4', type: 'text', points: 2, text: '4. Where did she find her shoes on Monday?' }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

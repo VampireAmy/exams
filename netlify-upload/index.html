@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone quizzes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213D; --ink-soft:#4A5878; --paper:#FBFCFE; --desk:#E9EFF8; --rule:#C9D6EA;
+  --margin:#E8788D; --mark:#FFD23F; --ok:#0F6F64; --ok-bg:#DDF3EF; --wait:#7A4E00; --wait-bg:#FFF0C7;
+  --soon:#5B6786; --soon-bg:#E4E9F2; --err:#B3261E; --focus:#1D4ED8;
+  --body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --head:'Bricolage Grotesque','Atkinson Hyperlegible',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ink:#E8EEFB; --ink-soft:#A9B6D3; --paper:#18213A; --desk:#0F1628; --rule:#2C3858;
+    --margin:#C45B73; --mark:#FFD23F; --ok:#7FE0D2; --ok-bg:#12403B; --wait:#FFD98A; --wait-bg:#4A3908;
+    --soon:#A9B6D3; --soon-bg:#26314F; --err:#FF9C94; --focus:#8FB0FF;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:var(--desk);color:var(--ink);font:400 1.0625rem/1.5 var(--body)}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0}
+a,button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+
+.wrap{max-width:760px;margin:0 auto;padding:clamp(16px,4vw,40px) clamp(12px,3vw,24px) 64px}
+
+/* Ruled sheet with a notebook margin line */
+.sheet{position:relative;background:var(--paper);border:1px solid var(--rule);border-radius:6px;
+  padding:28px 28px 32px 72px;box-shadow:0 1px 0 var(--rule),0 12px 28px -18px rgba(20,33,61,.45)}
+.sheet::before{content:"";position:absolute;left:48px;top:0;bottom:0;width:2px;background:var(--margin);opacity:.7}
+@media (max-width:520px){.sheet{padding:22px 18px 26px 46px}.sheet::before{left:30px}}
+
+/* Auth */
+.auth{max-width:480px;margin:clamp(8px,8vh,72px) auto 0}
+.auth h1{font-size:clamp(2rem,6vw,2.6rem);font-weight:800;letter-spacing:-.01em}
+.auth .lead{color:var(--ink-soft);margin:8px 0 22px}
+.tabs{display:flex;gap:4px;margin-bottom:18px;border-bottom:1px solid var(--rule)}
+.tab{background:none;border:0;padding:8px 14px;cursor:pointer;color:var(--ink-soft);border-bottom:3px solid transparent;margin-bottom:-1px;font-weight:700}
+.tab[aria-selected=true]{color:var(--ink);border-bottom-color:var(--mark)}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:700;margin-bottom:4px}
+.field input{width:100%;padding:11px 12px;background:var(--paper);border:1.5px solid var(--ink-soft);border-radius:6px;color:var(--ink)}
+.btn{display:inline-block;background:var(--ink);color:var(--paper);border:0;border-radius:6px;padding:11px 20px;font-weight:700;cursor:pointer}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.quiet{background:none;color:var(--ink);border:1.5px solid var(--ink-soft);padding:7px 14px}
+.link{background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;color:var(--ink-soft)}
+.row-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:6px}
+.msg{min-height:1.5em;margin:0 0 12px;color:var(--err);font-weight:700}
+.msg.info{color:var(--ok)}
+.setup{background:var(--wait-bg);color:var(--wait);padding:12px 14px;border-radius:6px;margin-top:16px}
+.setup code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+
+/* App */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.top .who{font-weight:700}
+.top .who small{display:block;font-weight:400;color:var(--ink-soft)}
+.top nav{display:flex;gap:10px;align-items:center}
+.top a.btn{text-decoration:none}
+
+.picker-title{font-size:1.5rem;font-weight:800;margin-bottom:14px}
+.books{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:34px}
+.book{text-align:left;background:var(--paper);border:1px solid var(--rule);border-left:14px solid var(--c);
+  border-radius:4px 8px 8px 4px;padding:14px 14px 14px 14px;cursor:pointer;
+  box-shadow:0 1px 0 var(--rule)}
+.book:hover{border-color:var(--c)}
+.book .name{display:inline;font-family:var(--head);font-weight:800;font-size:1.2rem;
+  background:linear-gradient(transparent 62%,transparent 62%)}
+.book[aria-pressed=true]{border-color:var(--c);box-shadow:0 0 0 2px var(--c)}
+.book[aria-pressed=true] .name{background:linear-gradient(transparent 62%,var(--mark) 62%)}
+.book .level{display:block;color:var(--ink-soft);font-size:.95rem;margin-top:2px}
+
+.units-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.units-head h2{font-size:1.6rem;font-weight:800}
+.units-head p{margin:0;color:var(--ink-soft)}
+.units{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--rule)}
+.units li{border-bottom:1px solid var(--rule)}
+.unit{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:14px;padding:13px 4px;text-decoration:none}
+a.unit:hover{background:color-mix(in srgb,var(--mark) 22%,transparent)}
+.unit .u{font-family:var(--head);font-weight:600;font-size:1.15rem}
+.unit .act{font-weight:700;min-width:5.5em;text-align:right}
+.unit.off{color:var(--ink-soft)}
+.unit.off .act{color:var(--ink-soft);font-weight:400}
+.chip{font-size:.9rem;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.wait{background:var(--wait-bg);color:var(--wait)}
+.chip.soon{background:var(--soon-bg);color:var(--soon)}
+.empty{color:var(--ink-soft);margin:10px 0 0}
+@media (max-width:520px){
+  .unit{grid-template-columns:1fr auto;row-gap:2px}
+  .unit .act{grid-column:1/-1;text-align:left;min-width:0}
+}
+@media (prefers-reduced-motion:no-preference){
+  .book,.unit{transition:background .15s,box-shadow .15s,border-color .15s}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p id="boot" class="empty" role="status">Loading…</p>
+
+  <!-- Login -->
+  <main id="authView" class="sheet auth" hidden>
+    <h1>Touchstone quizzes</h1>
+    <p class="lead">Sign in to take your quizzes and see your results.</p>
+
+    <div class="tabs" role="tablist" aria-label="Sign in or create an account">
+      <button class="tab" id="tabIn" role="tab" aria-selected="true" type="button">Sign in</button>
+      <button class="tab" id="tabUp" role="tab" aria-selected="false" type="button">Create account</button>
+    </div>
+
+    <form id="authForm" novalidate>
+      <div class="field" id="nameField" hidden>
+        <label for="name">Your name</label>
+        <input id="name" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" inputmode="email" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" minlength="6" required>
+      </div>
+      <p id="authMsg" class="msg" role="alert" aria-live="polite"></p>
+      <div class="row-actions">
+        <button class="btn" id="submitBtn" type="submit">Sign in</button>
+        <button class="link" id="resetBtn" type="button">Forgot your password?</button>
+      </div>
+    </form>
+
+    <div id="setupNote" class="setup" hidden>
+      <strong>Firebase isn't connected yet.</strong>
+      Open <code>firebase-init.js</code> and paste your project's web config.
+    </div>
+  </main>
+
+  <!-- Signed-in app -->
+  <div id="appView" hidden>
+    <header class="top">
+      <div class="who"><span id="who"></span><small id="role"></small></div>
+      <nav aria-label="Account">
+        <a class="btn quiet" id="teacherLink" href="teacher.html" hidden>Teacher view</a>
+        <button class="btn quiet" id="signOutBtn" type="button">Sign out</button>
+      </nav>
+    </header>
+
+    <section class="sheet" aria-labelledby="pickerTitle">
+      <h2 class="picker-title" id="pickerTitle">Choose your book</h2>
+      <div class="books" id="books"></div>
+
+      <div id="unitsBlock" hidden>
+        <div class="units-head">
+          <h2 id="unitsTitle"></h2>
+          <p id="unitsHint">12 quizzes</p>
+        </div>
+        <p id="loadMsg" class="msg" role="alert"></p>
+        <ul class="units" id="units"></ul>
+      </div>
+      <p id="pickPrompt" class="empty">Pick a book to see its quizzes.</p>
+    </section>
+  </div>
+
+</div>
+
+<script type="module">
+import { auth, db, SETTINGS, isConfigured } from './firebase-init.js';
+import {
+  onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signOut, updateProfile, sendPasswordResetEmail
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import {
+  doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+/* ------------------------------------------------------------------ data */
+// Exam files live at <book id>/unit<number>.html, e.g. touchstone1/unit7.html
+const BOOKS = [
+  { id: 'touchstone1', name: 'Touchstone 1', level: 'Beginner',          color: '#2F5DA8' },
+  { id: 'touchstone2', name: 'Touchstone 2', level: 'High beginner',     color: '#0F7B6F' },
+  { id: 'touchstone3', name: 'Touchstone 3', level: 'Intermediate',      color: '#6B4FB3' },
+  { id: 'touchstone4', name: 'Touchstone 4', level: 'High intermediate', color: '#B4600B' }
+];
+const UNIT_COUNT = 12;
+// Every exam page must carry this attribute on <html>. It lets the menu tell a real exam
+// from a missing page, even if the host answers unknown URLs with a fallback page.
+const EXAM_MARKER = ['data', 'touchstone', 'exam'].join('-');
+
+const $ = s => document.querySelector(s);
+const state = { uid: null, book: null, subs: new Map(), token: 0 };
+
+/* ------------------------------------------------------------------ auth UI */
+let mode = 'signin';
+
+function setMode(m) {
+  mode = m;
+  $('#tabIn').setAttribute('aria-selected', String(m === 'signin'));
+  $('#tabUp').setAttribute('aria-selected', String(m === 'signup'));
+  $('#nameField').hidden = m !== 'signup';
+  $('#submitBtn').textContent = m === 'signin' ? 'Sign in' : 'Create account';
+  $('#password').autocomplete = m === 'signin' ? 'current-password' : 'new-password';
+  say('');
+}
+function say(text, info = false) {
+  const el = $('#authMsg');
+  el.textContent = text;
+  el.classList.toggle('info', info);
+}
+function friendly(err) {
+  const map = {
+    'auth/invalid-credential': 'That email and password don’t match. Check them and try again.',
+    'auth/wrong-password': 'That email and password don’t match. Check them and try again.',
+    'auth/user-not-found': 'That email and password don’t match. Check them and try again.',
+    'auth/invalid-email': 'Enter a valid email address.',
+    'auth/email-already-in-use': 'An account with this email already exists. Use Sign in instead.',
+    'auth/weak-password': 'Choose a password with at least 6 characters.',
+    'auth/missing-password': 'Enter your password.',
+    'auth/too-many-requests': 'Too many attempts. Wait a few minutes, then try again.',
+    'auth/network-request-failed': 'No connection. Check your internet and try again.',
+    'auth/operation-not-allowed': 'Email sign-in is turned off. Enable Email/Password in Firebase Authentication.'
+  };
+  return map[err.code] || 'Something went wrong. Try again.';
+}
+
+$('#tabIn').addEventListener('click', () => setMode('signin'));
+$('#tabUp').addEventListener('click', () => setMode('signup'));
+
+$('#authForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  say('');
+  const email = $('#email').value.trim();
+  const pass = $('#password').value;
+  const name = $('#name').value.trim();
+  if (!email || !pass) return say('Enter your email and password.');
+  if (mode === 'signup' && !name) return say('Enter your name.');
+
+  const btn = $('#submitBtn');
+  btn.disabled = true;
+  try {
+    if (mode === 'signin') {
+      await signInWithEmailAndPassword(auth, email, pass);
+    } else {
+      const cred = await createUserWithEmailAndPassword(auth, email, pass);
+      await updateProfile(cred.user, { displayName: name });
+      await setDoc(doc(db, 'users', cred.user.uid), { name, email, createdAt: serverTimestamp() });
+      $('#who').textContent = name;
+    }
+  } catch (err) {
+    console.error(err);
+    say(friendly(err));
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+$('#resetBtn').addEventListener('click', async () => {
+  const email = $('#email').value.trim();
+  if (!email) return say('Type your email above, then select “Forgot your password?” again.');
+  try {
+    await sendPasswordResetEmail(auth, email);
+    say('Check your email for a link to reset your password.', true);
+  } catch (err) {
+    console.error(err);
+    say(friendly(err));
+  }
+});
+
+$('#signOutBtn').addEventListener('click', () => signOut(auth));
+
+/* ------------------------------------------------------------------ book + units */
+function renderBooks() {
+  const box = $('#books');
+  box.innerHTML = '';
+  for (const b of BOOKS) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'book';
+    btn.style.setProperty('--c', b.color);
+    btn.dataset.id = b.id;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.innerHTML = '<span class="name"></span><span class="level"></span>';
+    btn.querySelector('.name').textContent = b.name;
+    btn.querySelector('.level').textContent = b.level;
+    btn.addEventListener('click', () => { location.hash = b.id; showBook(b.id); });
+    box.append(btn);
+  }
+}
+
+const probeCache = new Map();
+function examExists(book, n) {
+  const url = `${book}/unit${n}.html`;
+  if (!probeCache.has(url)) {
+    probeCache.set(url, fetch(url, { cache: 'no-store' })
+      .then(async r => r.ok && (await r.text()).includes(EXAM_MARKER))
+      .catch(() => false));
+  }
+  return probeCache.get(url);
+}
+
+async function loadSubmissions(uid) {
+  state.subs = new Map();
+  $('#loadMsg').textContent = '';
+  try {
+    const snap = await getDocs(query(collection(db, 'submissions'), where('uid', '==', uid)));
+    snap.forEach(d => {
+      const s = d.data();
+      state.subs.set(`${s.book}_${s.unit}`, s);
+    });
+  } catch (err) {
+    console.error(err);
+    $('#loadMsg').textContent = 'Your results couldn’t be loaded. Check your connection, or ask your teacher to check the Firestore rules.';
+  }
+}
+
+async function showBook(id) {
+  const book = BOOKS.find(b => b.id === id);
+  if (!book) return;
+  const token = ++state.token;
+  state.book = id;
+
+  document.querySelectorAll('.book').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.id === id)));
+  $('#pickPrompt').hidden = true;
+  $('#unitsBlock').hidden = false;
+  $('#unitsTitle').textContent = book.name;
+  $('#unitsHint').textContent = `${UNIT_COUNT} quizzes`;
+  const list = $('#units');
+  list.innerHTML = '';
+
+  const found = await Promise.all(
+    Array.from({ length: UNIT_COUNT }, (_, i) => examExists(id, i + 1))
+  );
+  if (token !== state.token) return; // a newer pick replaced this one
+
+  found.forEach((exists, i) => {
+    const n = i + 1;
+    const unitKey = `unit${n}`;
+    const sub = state.subs.get(`${id}_${unitKey}`);
+    const li = document.createElement('li');
+
+    let chip = '', action = 'Start', cls = 'ok';
+    if (!exists) {
+      chip = 'Coming soon'; cls = 'soon'; action = '';
+    } else if (sub && sub.released) {
+      const score = typeof sub.score === 'number' ? ` · ${sub.score}/${sub.total ?? 50}` : '';
+      chip = 'Reviewed' + score; cls = 'ok'; action = 'See results';
+    } else if (sub) {
+      chip = 'Waiting for review'; cls = 'wait'; action = 'View';
+    }
+
+    const el = document.createElement(exists ? 'a' : 'div');
+    el.className = 'unit' + (exists ? '' : ' off');
+    if (exists) el.href = `${id}/${unitKey}.html`;
+    el.innerHTML = '<span class="u"></span><span class="chip"></span><span class="act"></span>';
+    el.querySelector('.u').textContent = `Unit ${n}`;
+    const chipEl = el.querySelector('.chip');
+    if (chip) { chipEl.textContent = chip; chipEl.classList.add(cls); } else { chipEl.remove(); }
+    el.querySelector('.act').textContent = action;
+    if (!chip) el.style.gridTemplateColumns = '1fr auto';
+    li.append(el);
+    list.append(li);
+  });
+}
+
+/* ------------------------------------------------------------------ session */
+async function checkTeacher(uid) {
+  try {
+    const snap = await getDoc(doc(db, 'admins', uid));
+    $('#teacherLink').hidden = !snap.exists();
+    $('#role').textContent = snap.exists() ? 'Teacher' : 'Student';
+  } catch {
+    $('#role').textContent = 'Student';
+  }
+}
+
+function showAuth() {
+  $('#boot').hidden = true;
+  $('#appView').hidden = true;
+  $('#authView').hidden = false;
+  $('#tabUp').hidden = !SETTINGS.allowSignup;
+  $('#setupNote').hidden = isConfigured;
+  $('#submitBtn').disabled = !isConfigured;
+  if (!SETTINGS.allowSignup) setMode('signin');
+}
+
+if (!isConfigured) {
+  showAuth();
+} else {
+  renderBooks();
+  onAuthStateChanged(auth, async user => {
+    if (!user) {
+      state.uid = null; state.book = null; state.token++;
+      showAuth();
+      $('#password').value = '';
+      return;
+    }
+    state.uid = user.uid;
+    $('#boot').hidden = true;
+    $('#authView').hidden = true;
+    $('#appView').hidden = false;
+    $('#who').textContent = user.displayName || user.email;
+    $('#role').textContent = '';
+    $('#teacherLink').hidden = true;
+    $('#unitsBlock').hidden = true;
+    $('#pickPrompt').hidden = false;
+    document.querySelectorAll('.book').forEach(b => b.setAttribute('aria-pressed', 'false'));
+
+    checkTeacher(user.uid);
+    await loadSubmissions(user.uid);
+    const h = location.hash.slice(1);
+    if (BOOKS.some(b => b.id === h)) showBook(h);
+  });
+  window.addEventListener('hashchange', () => {
+    const h = location.hash.slice(1);
+    if (state.uid && BOOKS.some(b => b.id === h)) showBook(h);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 4 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const bBox = ['cleans', 'does', 'goes', 'make', 'plays', 'take', 'works'];
+const cBox = ['I get up early on weekends.', 'I go to bed late every day.', 'I go to the gym in the afternoon.',
+  'I read the news on the Internet or on my cell phone.', 'I study about 10 hours a week.'];
+const verbs = ['check', 'have', 'live', 'play', 'study'];
+const doDoes = ['Do', 'Does'];
+const short = ['do', 'does', "don't", "doesn't"];
+
+// One question group per dialogue line of section D: (a) Do/Does, (b) verb, (c) short answer, (d) verb form.
+const dQ = (n, a, b, c, d) => [
+  { id: `D${n}a`, type: 'select', points: 1, text: `${n}(a) Do or Does?`, options: doDoes },
+  { id: `D${n}b`, type: 'select', points: 1, text: `${n}(b) Which verb?`, options: verbs },
+  { id: `D${n}c`, type: 'select', points: 1, text: `${n}(c) Short answer`, options: short },
+  { id: `D${n}d`, type: 'text',   points: 1, text: `${n}(d) Write the verb` }
+];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit4',
+  title: 'Unit 4 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Listen to Elizabeth and David talk about their day. Choose the correct answers.',
+      audio: 'audio/unit4.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. David eats breakfast ___.', options: ['late', 'early', 'on weekends'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. He reads and studies ___.', options: ['in the morning', 'in the afternoon', 'in the evening'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. Elizabeth studies ___.', options: ['in the library', 'in the cafeteria', 'at home'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. Elizabeth is at her parents’ house ___.', options: ['in the evenings', 'every morning', 'on weekends'] }
+      ] },
+
+    { letter: 'B', title: 'Complete the sentences with the correct words from the box. There is one extra word.',
+      boxes: [{ title: 'Words', text: bBox.join('\n') }],
+      questions: [
+        { id: 'B1', type: 'select', points: 1, text: '1. I ___ an English class in the evening. It’s fun, and I learn a lot!', options: bBox },
+        { id: 'B2', type: 'select', points: 1, text: '2. My best friend ___ sports after class. She loves soccer.', options: bBox },
+        { id: 'B3', type: 'select', points: 1, text: '3. My parents only ___ phone calls at night and on the weekends.', options: bBox },
+        { id: 'B4', type: 'select', points: 1, text: '4. My brother ___ shopping every day.', options: bBox },
+        { id: 'B5', type: 'select', points: 1, text: '5. My mom ___ the laundry on weekends.', options: bBox },
+        { id: 'B6', type: 'select', points: 1, text: '6. My dad ___ the house on weekends.', options: bBox }
+      ] },
+
+    { letter: 'C', title: 'Read the questions and answers. Add more information to each answer. Choose one of the sentences in the box. Use each sentence only once. There is one extra sentence.',
+      boxes: [{ title: 'Sentences', text: cBox.join('\n') }],
+      questions: [
+        { id: 'C1', type: 'select', points: 2, text: '1. A: Do you go to bed early on weekdays?  B: No, I don’t. ___', options: cBox },
+        { id: 'C2', type: 'select', points: 2, text: '2. A: Do you study English every day?  B: Yes, I do. ___', options: cBox },
+        { id: 'C3', type: 'select', points: 2, text: '3. A: Do you read the newspaper every day?  B: No, I don’t. ___', options: cBox },
+        { id: 'C4', type: 'select', points: 2, text: '4. A: Do you exercise after class?  B: Yes, I do. ___', options: cBox }
+      ] },
+
+    { letter: 'D', title: 'Complete the questions and answers. Use do / does and the verbs in the box. Use capital letters where necessary.',
+      intro: 'Example: A: Do you watch TV in the evening? B: Yes, I do. I watch TV every night. For each blank below, choose the answer or write it.',
+      boxes: [
+        { title: 'Verbs', text: 'check    have    live    play    study    watch' },
+        { title: 'Conversation 1', text: 'A: (a) ____ your brother (b) ____ after school?\nB: Yes, he (c) ____ . He (d) ____ for his English class at the library.' },
+        { title: 'Conversation 2', text: 'A: (a) ____ your sister (b) ____ soccer after school?\nB: No, she (c) ____ . She (d) ____ soccer on the weekends.' },
+        { title: 'Conversation 3', text: 'A: (a) ____ your co-workers (b) ____ their email on the weekends?\nB: No, they (c) ____ . But they (d) ____ their email all the time on weekdays.' },
+        { title: 'Conversation 4', text: 'A: (a) ____ your father (b) ____ coffee in the morning?\nB: Yes, he (c) ____ . He (d) ____ coffee before work.' },
+        { title: 'Conversation 5', text: 'A: (a) ____ your parents (b) ____ around here?\nB: No, they (c) ____ . They (d) ____ about 20 miles away.' }
+      ],
+      questions: [1, 2, 3, 4, 5].flatMap(n => dQ(n)) },
+
+    { letter: 'E', title: 'Read the email. Then choose the correct answers.',
+      boxes: [{ title: 'Email from Ray to Anton', text:
+        'Dear Anton,\n\n' +
+        'How are you? Are you still sick? I’m fine, but I’m very busy at school this year. My classes are very hard. I have English two hours a day. On Tuesday and Thursday, I take a special law class. I have a lot of homework in all my classes, so I study every day.\n\n' +
+        'Also, I work in the school library after class – on Mondays and Wednesdays. I work late. It’s very quiet, so I study at work, too.\n\n' +
+        'I don’t have time to see friends after school. But, we go out on the weekends. We go to concerts and movies.\n\n' +
+        'How are your classes? Are you busy? How are your parents?\n\n' +
+        'Bye for now.\nRay' }],
+      questions: [
+        { id: 'E1', type: 'choice', points: 2, text: '1. Ray is ___.', options: ['sick', 'busy', 'quiet'] },
+        { id: 'E2', type: 'choice', points: 2, text: '2. Ray takes law classes ___.', options: ['two hours a day', 'two days a week', 'after English classes'] },
+        { id: 'E3', type: 'choice', points: 2, text: '3. Ray works ___.', options: ['two nights', 'before class', 'on Tuesdays'] },
+        { id: 'E4', type: 'choice', points: 2, text: '4. Ray goes out with his friends ___.', options: ['on Wednesdays', 'on the weekends', 'after school'] }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

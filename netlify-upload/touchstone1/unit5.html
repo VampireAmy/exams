@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 5 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const eBox = ['Do you ever go to clubs?', 'I mean, do you have a part-time job?', 'I mean, do you have any free time after school?',
+  'I mean, do you spend a lot of time with your friends?', 'Where do you go?'];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit5',
+  title: 'Unit 5 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Listen to Greg and Nicole talk about their free time. Choose the correct answers.',
+      audio: 'audio/unit5.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. Nicole goes ___ once or twice a week.', options: ['to the movies', 'to a club'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. Greg goes to the club with ___.', options: ['his friends', 'his girlfriend'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. Student Night is on ___.', options: ['Thursday', 'Friday'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. After the club, Greg goes ___.', options: ['to a restaurant', 'straight home'] }
+      ] },
+
+    { letter: 'B', title: 'Write the questions. Use the simple present and the words in parentheses. Use capital letters where necessary.',
+      questions: [
+        { id: 'B1', type: 'text', points: 2, text: '1. (how often / you / go on the Internet)  A: ______ ?  B: Every day.' },
+        { id: 'B2', type: 'text', points: 2, text: '2. (where / your best friends / go / on the weekends)  A: ______ ?  B: To a club or the movies.' },
+        { id: 'B3', type: 'text', points: 2, text: '3. (when / your mother / see her friends)  A: ______ ?  B: On Sundays.' },
+        { id: 'B4', type: 'text', points: 2, text: '4. (what / your brother / do / in his free time)  A: ______ ?  B: He reads a lot.' },
+        { id: 'B5', type: 'text', points: 2, text: '5. (who / your parents / go out with)  A: ______ ?  B: With their friends.' }
+      ] },
+
+    { letter: 'C', title: 'Read the sentences. Choose the correct words.',
+      questions: [
+        { id: 'C1', type: 'select', points: 2, text: '1. I don’t like TV. I ___ watch TV.', options: ['always', 'often', 'never'] },
+        { id: 'C2', type: 'select', points: 2, text: '2. My brother eats out every night. He ___ goes to a restaurant for dinner.', options: ['always', 'often', 'sometimes'] },
+        { id: 'C3', type: 'select', points: 2, text: '3. My parents go to the movies three times a month. They ___ go to the movies.', options: ['always', 'sometimes', 'never'] },
+        { id: 'C4', type: 'select', points: 2, text: '4. My sister goes to a club about once a year. She ___ goes to clubs.', options: ['usually', 'sometimes', 'hardly ever'] },
+        { id: 'C5', type: 'select', points: 2, text: '5. I like to make different things for dinner. I ___ cook at home in the evenings.', options: ['hardly ever', 'usually', 'never'] }
+      ] },
+
+    { letter: 'D', title: 'Put the words in the correct order to make sentences.',
+      questions: [
+        { id: 'D1', type: 'text', points: 1, text: '1. (I / talk shows / watch / never)  “I can’t stand talk shows! ______ .”' },
+        { id: 'D2', type: 'text', points: 1, text: '2. (on TV / watch / hardly ever / I / commercials)  “______ . They aren’t very interesting.”' },
+        { id: 'D3', type: 'text', points: 1, text: '3. (My brother / TV / all the time / watches)  “______ . He watches it on his computer.”' },
+        { id: 'D4', type: 'text', points: 1, text: '4. (often / and / watch / I / soap operas / My friends)  “______ . We really like them.”' },
+        { id: 'D5', type: 'text', points: 1, text: '5. (sitcoms / watch / I / always / in / the / evenings)  “I love sitcoms! ______ .”' },
+        { id: 'D6', type: 'text', points: 1, text: '6. (Sometimes / watches / my sister / reality shows)  “______ . She watches game shows, too.”' }
+      ] },
+
+    { letter: 'E', title: 'Complete each conversation. Add a second question from the box. Use each question only once. There is one extra question.',
+      boxes: [{ title: 'Questions', text: eBox.join('\n') }],
+      questions: [
+        { id: 'E1', type: 'select', points: 2, text: '1. A: So, what do you do on Saturday nights? ___  B: No, not very often. They’re very noisy, and I don’t usually like the music there.', options: eBox },
+        { id: 'E2', type: 'select', points: 2, text: '2. A: So, how often do you go out with friends? ___  B: Well, no, not really. I see my best friends once or twice a month.', options: eBox },
+        { id: 'E3', type: 'select', points: 2, text: '3. A: Do you relax after class? ___  B: No, not really. I’m pretty busy. I go straight to work.', options: eBox },
+        { id: 'E4', type: 'select', points: 2, text: '4. A: Do you work in the evenings? ___  B: Yes, I do. I work in the school library twice a week.', options: eBox }
+      ] },
+
+    { letter: 'F', title: 'Read the article. Then choose the correct answers.',
+      boxes: [{ title: 'Are Americans TV addicts?', text:
+        'How many hours do you watch TV a day? Two? Six? Ten? An average American watches TV for about 35 hours every week. That’s five hours a day for seven days! They have dinner in front of the TV, they work in front of the TV, and sometimes they even sleep in front of the TV!\n\n' +
+        'Americans usually watch TV in the evening. Evening shows, such as sitcoms and reality shows, are sometimes on TV once a week, sometimes every night. On the night of their favorite show, some people don’t go out or answer the phone. They don’t even talk to family members during the show. About 59 percent of Americans watch TV and go on the Internet at the same time.\n\n' +
+        'Television is an important part of American life. A lot of people talk about their favorite shows all the time – at work, at school, and on the phone. Many people write about popular TV shows on social networking sites.' }],
+      questions: [
+        { id: 'F1', type: 'choice', points: 2, text: '1. An average American watches TV ___ hours a day.', options: ['five', 'six', 'seven'] },
+        { id: 'F2', type: 'choice', points: 2, text: '2. When do Americans usually watch TV?', options: ['In the morning', 'In the afternoon', 'In the evening'] },
+        { id: 'F3', type: 'choice', points: 2, text: '3. The article says that some people ___ during their favorite TV shows.', options: ['don’t go on the Internet', 'don’t talk with family', 'don’t go to work'] },
+        { id: 'F4', type: 'choice', points: 2, text: '4. The article says some people write about their favorite shows ___.', options: ['at school', 'on social networking sites', 'at work'] }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

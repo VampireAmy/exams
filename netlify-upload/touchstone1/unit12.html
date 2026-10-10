@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 12 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const bBox = ['a', 'an', 'a lot of', 'many', 'much'];
+const someAny = ['some', 'any'];
+const would = ['would you like', 'would you like to', 'Would you like', 'Would you like to'];
+const kinds = ['fruit', 'meat', 'seafood', 'vegetables'];
+const orSth = ['or something', 'or anything'];
+const dishes = ['Asian Stir-Fry', 'Pizza', 'Spanish Seafood', 'All-American', 'Moroccan Stew'];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit12',
+  title: 'Unit 12 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Listen to the two conversations about food and restaurants. Choose the correct answers.',
+      audio: 'audio/unit12.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: 'Conversation 1. 1. Katie usually ___ for lunch.', options: ['has something light', 'has a big meal', 'goes out'] },
+        { id: 'A2', type: 'choice', points: 2, text: 'Conversation 1. 2. The restaurant doesn’t serve ___.', options: ['pasta', 'sandwiches', 'salads'] },
+        { id: 'A3', type: 'choice', points: 2, text: 'Conversation 2. 3. The man and the woman don’t have any ___ at home.', options: ['pasta', 'chicken', 'hamburger meat'] },
+        { id: 'A4', type: 'choice', points: 2, text: 'Conversation 2. 4. The man and the woman decide to go to ___ restaurant.', options: ['a Chinese', 'an Italian', 'a Mexican'] }
+      ] },
+
+    { letter: 'B', title: 'Complete the questions and answers. Use the words in the box. Some words or expressions are used twice.',
+      boxes: [{ title: 'Words', text: 'a / an      a lot of      many      much' }],
+      questions: [
+        { id: 'B1', type: 'select', points: 1, text: '1A. How ___ fruit do you eat a day?', options: bBox },
+        { id: 'B2', type: 'select', points: 1, text: '1B. Well, I have ___ banana every day for lunch. I don’t eat a big lunch.', options: bBox },
+        { id: 'B3', type: 'select', points: 1, text: '2A. How ___ times a week do your parents eat meat?', options: bBox },
+        { id: 'B4', type: 'select', points: 1, text: '2B. They eat meat every day. They eat ___ meat.', options: bBox },
+        { id: 'B5', type: 'select', points: 1, text: '3A. Does your brother eat ___ eggs?', options: bBox },
+        { id: 'B6', type: 'select', points: 1, text: '3B. No, he doesn’t. He probably eats ___ egg about once a month.', options: bBox }
+      ] },
+
+    { letter: 'C', title: 'Complete the conversations. Choose some or any.',
+      questions: [
+        { id: 'C1', type: 'select', points: 1, text: '1A. Would you like to get ___ coffee after class?', options: someAny },
+        { id: 'C2', type: 'select', points: 1, text: '1B. Sure. Let’s get ___ and sit outside. It’s so sunny.', options: someAny },
+        { id: 'C3', type: 'select', points: 1, text: '2A. Do you have ___ snacks? I’m starving.', options: someAny },
+        { id: 'C4', type: 'select', points: 1, text: '2B. No, but I have ___ fruit. You can have that.', options: someAny },
+        { id: 'C5', type: 'select', points: 1, text: '3A. It’s so hot. Do you want to come to our house? We have ___ ice cream.', options: someAny },
+        { id: 'C6', type: 'select', points: 1, text: '3B. Sure. Do you have ___ chocolate ice cream? It’s my favorite!', options: someAny }
+      ] },
+
+    { letter: 'D', title: 'Complete the questions with would you like or would you like to. Use capital letters where necessary.',
+      questions: [
+        { id: 'D1', type: 'select', points: 2, text: '1. ___ have dinner?', options: would },
+        { id: 'D2', type: 'select', points: 2, text: '2. What ___ for dinner?', options: would },
+        { id: 'D3', type: 'select', points: 2, text: '3. Where ___ go?', options: would }
+      ] },
+
+    { letter: 'E', title: 'What kinds of foods are these? Choose the correct heading for each word.',
+      questions: [
+        { id: 'E1', type: 'select', points: 1, text: 'apples', options: kinds },
+        { id: 'E2', type: 'select', points: 1, text: 'carrots', options: kinds },
+        { id: 'E3', type: 'select', points: 1, text: 'chicken', options: kinds },
+        { id: 'E4', type: 'select', points: 1, text: 'lamb', options: kinds },
+        { id: 'E5', type: 'select', points: 1, text: 'lettuce', options: kinds },
+        { id: 'E6', type: 'select', points: 1, text: 'melon', options: kinds },
+        { id: 'E7', type: 'select', points: 1, text: 'salmon', options: kinds },
+        { id: 'E8', type: 'select', points: 1, text: 'shrimp', options: kinds }
+      ] },
+
+    { letter: 'F', title: 'Complete the conversation with or something and or anything.',
+      boxes: [{ title: 'Conversation', text:
+        'A: I’m tired. Let’s take a break.\n' +
+        'B: That’s a good idea. Actually, I’d like some coffee (1) ______ like that.\n' +
+        'A: Me too. Actually, it’s almost noon. Would you like to go out for lunch?\n' +
+        'B: No, thanks, I’m not really hungry. I don’t want a big meal (2) ______ .\n' +
+        'A: So you don’t want a snack (3) ______ ?\n' +
+        'B: I don’t know. No, not really.\n' +
+        'A: Well, then let’s go to a coffee shop. You can have coffee, and I can get a sandwich (4) ______ .\n' +
+        'B: That sounds good.' }],
+      questions: [
+        { id: 'F1', type: 'select', points: 2, text: 'Blank (1)', options: orSth },
+        { id: 'F2', type: 'select', points: 2, text: 'Blank (2)', options: orSth },
+        { id: 'F3', type: 'select', points: 2, text: 'Blank (3)', options: orSth },
+        { id: 'F4', type: 'select', points: 2, text: 'Blank (4)', options: orSth }
+      ] },
+
+    { letter: 'G', title: 'Read the menu. Then read about the people. What would they like to eat? Choose a dish for each person. There is one extra dish.',
+      boxes: [{ title: 'International Street Restaurant', text:
+        'Asian Stir-Fry – $9.95\nOur stir-fry has lots of fresh spinach, peppers, green beans, and other vegetables. We cook the vegetables in a delicious Chinese sauce. Served with soup.\n\n' +
+        'Pizza – $6.95\nTry our delicious homemade pizza. We use real Italian cheese on all our pizzas. We recommend a traditional tomato and cheese pizza. Or add onions, beef, pineapple, or black olives.\n\n' +
+        'Spanish Seafood – $10.95\nThis seafood dish is a tasty mix of fish and shrimp. Then we add Spanish spices for an exciting dinner. Served with rice.\n\n' +
+        'All-American – $11.95\nThe All-American lunch is a big, American meal! Enjoy a steak, tasty potatoes, and fresh green beans.\n\n' +
+        'Moroccan Stew – $16.95\nThis stew has a lot of meat, vegetables, and potatoes. It also has hot peppers and is very spicy!' }],
+      questions: [
+        { id: 'G1', type: 'select', points: 2, text: '1. Yuki is a vegetarian. She doesn’t eat meat or fish. She loves vegetables. And she doesn’t eat bread or pasta.', options: dishes },
+        { id: 'G2', type: 'select', points: 2, text: '2. Jeff loves meat, and he eats a lot. But he doesn’t like spicy food.', options: dishes },
+        { id: 'G3', type: 'select', points: 2, text: '3. Connie likes European food, but she doesn’t eat meat or cheese.', options: dishes },
+        { id: 'G4', type: 'select', points: 2, text: '4. Ben isn’t picky. He likes meat, vegetables, and seafood. But he doesn’t like to spend a lot of money.', options: dishes }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

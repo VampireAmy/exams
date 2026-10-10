@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Upload answer keys</title>
+<style>
+:root{--ink:#14213D;--soft:#4A5878;--paper:#FBFCFE;--desk:#E9EFF8;--rule:#C9D6EA;--ok:#0F6F64;--bad:#9B1C1C}
+@media (prefers-color-scheme:dark){:root{--ink:#E8EEFB;--soft:#A9B6D3;--paper:#18213A;--desk:#0F1628;--rule:#2C3858;--ok:#7FE0D2;--bad:#FFB3AC}}
+body{margin:0;background:var(--desk);color:var(--ink);font:400 1.0625rem/1.5 system-ui,-apple-system,'Segoe UI',sans-serif}
+main{max-width:620px;margin:0 auto;padding:32px 16px}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:22px}
+h1{margin:0 0 6px;font-size:1.6rem}
+p{margin:0 0 14px;color:var(--soft)}
+input[type=file]{display:block;margin:0 0 14px;max-width:100%}
+button{background:var(--ink);color:var(--paper);border:0;border-radius:6px;padding:11px 20px;font:inherit;font-weight:700;cursor:pointer}
+button:disabled{opacity:.6}
+ul{padding-left:20px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+:focus-visible{outline:3px solid #1D4ED8;outline-offset:2px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <h1>Upload answer keys</h1>
+    <p id="status" role="status">Checking your account…</p>
+    <div id="tool" hidden>
+      <p>Choose one or more key files from your <code>private</code> folder (for example <code>touchstone1_unit7.json</code>). Uploading again replaces the old key.</p>
+      <input id="files" type="file" accept=".json,application/json" multiple aria-label="Answer key files">
+      <button id="go" type="button">Save to Firestore</button>
+      <ul id="log"></ul>
+    </div>
+  </div>
+</main>
+<script type="module">
+import { auth, db, isConfigured } from './firebase-init.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const $ = s => document.querySelector(s);
+if (!isConfigured) {
+  $('#status').textContent = 'Firebase isn’t connected yet. Fill in firebase-init.js.';
+} else {
+  onAuthStateChanged(auth, async user => {
+    if (!user) { $('#status').innerHTML = 'Sign in on the <a href="index.html">home page</a> first, then come back.'; return; }
+    let teacher = false;
+    try { teacher = (await getDoc(doc(db, 'admins', user.uid))).exists(); } catch {}
+    if (!teacher) { $('#status').textContent = 'This page is for the teacher account only.'; return; }
+    $('#status').textContent = `Signed in as ${user.email}.`;
+    $('#tool').hidden = false;
+  });
+
+  $('#go').addEventListener('click', async () => {
+    const files = [...$('#files').files];
+    const log = $('#log');
+    log.innerHTML = '';
+    if (!files.length) { $('#status').textContent = 'Choose at least one file first.'; return; }
+    $('#go').disabled = true;
+    for (const f of files) {
+      const li = document.createElement('li');
+      try {
+        const data = JSON.parse(await f.text());
+        if (!data.id || !data.answers || typeof data.answers !== 'object') throw new Error('The file needs "id" and "answers".');
+        await setDoc(doc(db, 'answerKeys', data.id), { answers: data.answers, updatedAt: serverTimestamp() });
+        li.className = 'ok';
+        li.textContent = `Saved ${data.id} (${Object.keys(data.answers).length} answers)`;
+      } catch (err) {
+        console.error(err);
+        li.className = 'bad';
+        li.textContent = `${f.name}: ${err.message}`;
+      }
+      log.append(li);
+    }
+    $('#go').disabled = false;
+  });
+}
+</script>
+</body>
+</html>

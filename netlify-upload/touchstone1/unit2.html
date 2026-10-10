@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 2 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const aBox = ["She's late.", 'At work.', "She's sick.", 'On vacation.', 'In the cafeteria.'];
+const thisThese = ['this', 'these'];
+const itThey = ["it's", "they're"];
+const where = ["Where's", 'Where are'];
+const prep = ['next to', 'on', 'in', 'in front of', 'under'];
+const fBox = ['Can I borrow your', 'Can you repeat that', 'How do you spell', "What's the word for this"];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit2',
+  title: 'Unit 2 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Listen to the conversation in a classroom. Match the questions and the answers. There is one extra answer.',
+      audio: 'audio/unit2.mp3',
+      questions: [
+        { id: 'A1', type: 'select', points: 2, text: '1. Where’s Sarah?', options: aBox },
+        { id: 'A2', type: 'select', points: 2, text: '2. Where’s Michi?', options: aBox },
+        { id: 'A3', type: 'select', points: 2, text: '3. Where are Victor and Emily?', options: aBox },
+        { id: 'A4', type: 'select', points: 2, text: '4. Where’s Andy?', options: aBox }
+      ] },
+
+    { letter: 'B', title: 'Complete the conversations with the words in the box. Use each word only once. Use capital letters where necessary.',
+      boxes: [{ title: 'Words', text: 'are    he’s    is    ’s    she’s    they’re' }],
+      questions: [
+        { id: 'B1', type: 'text', points: 2, text: '1A. A: Where ______ David?' },
+        { id: 'B2', type: 'text', points: 2, text: '1B. B: I don’t know. I think ______ at the library.' },
+        { id: 'B3', type: 'text', points: 2, text: '2A. A: ______ Matt and Sarah here?' },
+        { id: 'B4', type: 'text', points: 2, text: '2B. B: No, ______ late again.' },
+        { id: 'B5', type: 'text', points: 2, text: '3A. A: ______ Ana in class today?' },
+        { id: 'B6', type: 'text', points: 2, text: '3B. B: No, ______ at home.' }
+      ] },
+
+    { letter: 'C', title: 'Choose the correct words.',
+      questions: [
+        { id: 'C1', type: 'select', points: 1, text: '1A. Are ___ your sunglasses?', options: thisThese },
+        { id: 'C2', type: 'select', points: 1, text: '1B. No, ___ Jun’s sunglasses.', options: itThey },
+        { id: 'C3', type: 'select', points: 1, text: '2A. Is ___ David’s umbrella?', options: thisThese },
+        { id: 'C4', type: 'select', points: 1, text: '2B. No, I think ___ the teacher’s umbrella.', options: itThey },
+        { id: 'C5', type: 'select', points: 1, text: '3A. What’s ___?', options: thisThese },
+        { id: 'C6', type: 'select', points: 1, text: '3B. ___ an eraser.', options: ["It's", "They're"] },
+        { id: 'C7', type: 'select', points: 1, text: '4A. Are ___ your pens?', options: thisThese },
+        { id: 'C8', type: 'select', points: 1, text: '4B. Yeah, ___. Thanks.', options: ['it is', 'they are'] }
+      ] },
+
+    { letter: 'D', title: 'Choose the word that does NOT belong in each sentence.',
+      questions: [
+        { id: 'D1', type: 'choice', points: 1, text: '1. The clocks / markers / posters are on the wall.', options: ['clocks', 'markers', 'posters'] },
+        { id: 'D2', type: 'choice', points: 1, text: '2. The TV / CD player / window is on the table.', options: ['TV', 'CD player', 'window'] },
+        { id: 'D3', type: 'choice', points: 1, text: '3. The wastebaskets / scissors / keys are in the drawer.', options: ['wastebaskets', 'scissors', 'keys'] },
+        { id: 'D4', type: 'choice', points: 1, text: '4. The wastebasket / dictionary / door is on the floor.', options: ['wastebasket', 'dictionary', 'door'] },
+        { id: 'D5', type: 'choice', points: 1, text: '5. The computer / board / workbook is on the desk.', options: ['computer', 'board', 'workbook'] },
+        { id: 'D6', type: 'choice', points: 1, text: '6. The table / wallet / map is on the chair.', options: ['table', 'wallet', 'map'] }
+      ] },
+
+    { letter: 'E', title: 'Complete the questions with Where’s or Where are. Then look at the picture and complete the answers with next to, on, in, in front of, or under. There is one extra word or expression.',
+      image: { src: 'img/unit2-e.jpg', alt: 'A picture of a room with a desk and a chair. There are several objects in the room.' },
+      questions: [
+        { id: 'E1', type: 'select', points: 1, text: '1A. ___ the bag?', options: where },
+        { id: 'E2', type: 'select', points: 1, text: '1B. It’s ___ the chair.', options: prep },
+        { id: 'E3', type: 'select', points: 1, text: '2A. ___ the pens?', options: where },
+        { id: 'E4', type: 'select', points: 1, text: '2B. They’re ___ the drawer.', options: prep },
+        { id: 'E5', type: 'select', points: 1, text: '3A. ___ the dictionary?', options: where },
+        { id: 'E6', type: 'select', points: 1, text: '3B. It’s ___ the desk.', options: prep },
+        { id: 'E7', type: 'select', points: 1, text: '4A. ___ the umbrella?', options: where },
+        { id: 'E8', type: 'select', points: 1, text: '4B. It’s ___ the floor.', options: prep }
+      ] },
+
+    { letter: 'F', title: 'Complete the conversations. Use the expressions in the box.',
+      boxes: [{ title: 'Expressions', text: fBox.join('\n') }],
+      questions: [
+        { id: 'F1', type: 'select', points: 2, text: '1. A: ___ in English?  B: It’s a wallet.', options: fBox },
+        { id: 'F2', type: 'select', points: 2, text: '2. A: Open your books to page 9, please.  B: Ms. Larsen? ___, please?  A: Yes. Turn to page 9.', options: fBox },
+        { id: 'F3', type: 'select', points: 2, text: '3. A: ___ pen?  B: Sure. Here you go.', options: fBox },
+        { id: 'F4', type: 'select', points: 2, text: '4. A: What’s this?  B: It’s a cell phone.  A: ___ cell?  B: C-E-L-L.', options: fBox }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

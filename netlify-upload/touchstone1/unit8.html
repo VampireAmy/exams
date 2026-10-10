@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Unit 8 quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js';
+
+const dBox = ['a backpack', 'a coat and boots', 'jeans', 'a suit and tie', 'a uniform'];
+const itThey = ["It's", "They're"];
+const tf = ['True', 'False'];
+
+startExam({
+  book: 'touchstone1',
+  unit: 'unit8',
+  title: 'Unit 8 Written quiz',
+  total: 50,
+  sections: [
+    { letter: 'A', title: 'Listen to four different conversations in a store. Choose the correct answers.',
+      audio: 'audio/unit8.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. The man is ___.', options: ['buying a hat for his mother', 'buying a present for his girlfriend', 'looking for his scarf'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. The red baseball caps ___.', options: ['are $12.95', 'are $9.25', 'are $7.95'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. The woman is ___.', options: ['buying a dressy skirt', 'looking for something casual and comfortable', 'looking for pants'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4. The woman ___.', options: ['wants to buy something casual', 'wants to buy a fun skirt', 'needs to buy some jeans'] }
+      ] },
+
+    { letter: 'B', title: 'Complete the conversations. Use the words in parentheses. Add do / does and to after the verbs where necessary. Use capital letters where necessary.',
+      questions: [
+        { id: 'B1', type: 'text', points: 2, text: '1A. What kinds of clothes ______ (you / like / wear) to work?' },
+        { id: 'B2', type: 'text', points: 2, text: '1B. Actually, I ______ (have to / wear) a uniform.' },
+        { id: 'B3', type: 'text', points: 2, text: '2A. I need to go shopping today. ______ (you / need / buy) anything at the mall?' },
+        { id: 'B4', type: 'text', points: 2, text: '2B. Yeah, I ______ (want / get) a couple of things. Let’s meet after class.' },
+        { id: 'B5', type: 'text', points: 2, text: '3A. ______ (your teacher / have to / wear) a suit to work?' },
+        { id: 'B6', type: 'text', points: 2, text: '3B. No, he doesn’t. But he ______ (have to / look) good.' }
+      ] },
+
+    { letter: 'C', title: 'Choose the correct words.',
+      questions: [
+        { id: 'C1', type: 'select', points: 1, text: '1A. How much is ___ purse?', options: ['this', 'these'] },
+        { id: 'C2', type: 'select', points: 1, text: '1B. ___ $29.95.', options: itThey },
+        { id: 'C3', type: 'select', points: 1, text: '2A. How much are ___ shoes?', options: ['that', 'these'] },
+        { id: 'C4', type: 'select', points: 1, text: '2B. ___ $52.50.', options: itThey },
+        { id: 'C5', type: 'select', points: 1, text: '3A. How much are ___ sunglasses?', options: ['this', 'those'] },
+        { id: 'C6', type: 'select', points: 1, text: '3B. ___ $11.50.', options: itThey },
+        { id: 'C7', type: 'select', points: 1, text: '4A. How much is ___ belt?', options: ['that', 'those'] },
+        { id: 'C8', type: 'select', points: 1, text: '4B. ___ $18.00.', options: itThey }
+      ] },
+
+    { letter: 'D', title: 'Complete the sentences with the words in the box. There is one extra word or expression.',
+      boxes: [{ title: 'Words', text: dBox.join('\n') }],
+      questions: [
+        { id: 'D1', type: 'select', points: 1, text: '1. I need to buy ___ for school. I have a lot of books.', options: dBox },
+        { id: 'D2', type: 'select', points: 1, text: '2. I have to look good for work. I usually wear ___.', options: dBox },
+        { id: 'D3', type: 'select', points: 1, text: '3. My husband is tired after work. He just wants to go home and put on ___ or something comfortable.', options: dBox },
+        { id: 'D4', type: 'select', points: 1, text: '4. It’s cold this winter. I need to buy ___.', options: dBox }
+      ] },
+
+    { letter: 'E', title: 'Complete the conversation. Choose the correct expressions.',
+      boxes: [{ title: 'Conversation', text:
+        'A: Are you wearing those jeans to the restaurant?\n' +
+        'B: (1) Let’s go.\n' +
+        'A: I know jeans are comfortable, but it’s an expensive place.\n' +
+        'B: (2)\n' +
+        'A: Well, I’m wearing this suit. . . .\n' +
+        'B: Yeah, you look great. OK. (3) What do I have?\n' +
+        'A: How about your new black pants?\n' +
+        'B: (4) great! They’re perfect. Good idea!' }],
+      questions: [
+        { id: 'E1', type: 'choice', points: 2, text: 'Blank (1)', options: ['Uh-huh.', 'Let me think.'] },
+        { id: 'E2', type: 'choice', points: 2, text: 'Blank (2)', options: ['Um, me too.', 'Oh, really?'] },
+        { id: 'E3', type: 'choice', points: 2, text: 'Blank (3)', options: ["Let's see.", 'Really?'] },
+        { id: 'E4', type: 'choice', points: 2, text: 'Blank (4)', options: ['Oh,', 'Well,'] }
+      ] },
+
+    { letter: 'F', title: 'Read the memo to the servers in a restaurant. Then choose True or False.',
+      boxes: [{ title: 'Memo', text:
+        'TO: All servers\nFROM: Matt Hanson\nRE: Uniforms\nDATE: 10/16\n\n' +
+        'This season we have new uniforms. All servers – men and women – have to wear the new uniform. The pants are white, and the shirt is orange. The uniform also has a white belt, but you don’t have to wear it. You need to wear white socks, but there are no socks with the uniform. You have to buy your own socks.\n\n' +
+        'The new uniform costs $49.95. You don’t have to pay for a uniform. The restaurant is paying for two uniforms for all servers. If you want more than two uniforms, you have to pay for the extra uniforms.\n\n' +
+        'Thank you.' }],
+      questions: [
+        { id: 'F1', type: 'choice', points: 2, text: '1. Only men have to wear uniforms.', options: tf },
+        { id: 'F2', type: 'choice', points: 2, text: '2. The uniform’s shirt and pants are different colors.', options: tf },
+        { id: 'F3', type: 'choice', points: 2, text: '3. There’s no belt for the uniform.', options: tf },
+        { id: 'F4', type: 'choice', points: 2, text: '4. Servers have to buy white socks.', options: tf },
+        { id: 'F5', type: 'choice', points: 2, text: '5. Servers need to pay for two uniforms.', options: tf }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>
