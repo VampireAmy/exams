@@ -97,6 +97,21 @@ export function startExam(exam) {
       return;
     }
 
+    // A quiz that hasn't been submitted yet must be unlocked by the teacher first.
+    let unlocked = !!sub;
+    if (!sub) {
+      try {
+        unlocked = (await getDoc(doc(db, 'unlocks', `${user.uid}_${exam.book}_${exam.unit}`))).exists();
+      } catch (err) { console.error(err); unlocked = false; }
+    }
+    if (!unlocked) {
+      root.replaceChildren(
+        h('a', { class: 'back', href: back, text: 'Back to quizzes' }),
+        h('h1', { text: exam.title }),
+        h('p', { class: 'banner info', text: 'This quiz is locked. Your teacher will unlock it when it’s time.' }));
+      return;
+    }
+
     let key = null;
     if (sub && sub.released) {
       try {
