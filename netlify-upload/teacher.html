@@ -65,13 +65,20 @@ box-shadow:0 -8px 24px -16px rgba(20,33,61,.5)}
 .bar .total{font-weight:800;font-family:var(--head);font-size:1.15rem;margin-right:auto}
 .toast{margin:0 0 10px;font-weight:700}
 .toast.ok{color:var(--ok)}
+.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:14px 0}
+.ucell{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid var(--rule);border-radius:6px;padding:9px 10px;cursor:pointer}
+.ucell:hover{background:color-mix(in srgb,var(--mark) 22%,transparent)}
+.ucell input{accent-color:var(--ink);width:1.1rem;height:1.1rem}
+.ucell .un{font-weight:700}
+.ucell .chip{font-size:.8rem;padding:1px 8px;grid-row:auto;grid-column:auto}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <h1>Teacher view</h1>
-    <nav><a href="index.html">Student menu</a><a href="seed-keys.html">Upload answer keys</a></nav>
+    <nav><a href="#">Submissions</a><a href="#unlocks">Unlock quizzes</a><a href="index.html">Student menu</a><a href="seed-keys.html">Upload answer keys</a></nav>
   </header>
   <p id="status" class="note" role="status">Checking your account…</p>
   <div id="app" hidden></div>
@@ -81,7 +88,7 @@ box-shadow:0 -8px 24px -16px rgba(20,33,61,.5)}
 import { auth, db, isConfigured } from './firebase-init.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import {
-  collection, getDocs, getDoc, doc, updateDoc, deleteDoc, serverTimestamp
+  collection, getDocs, getDoc, doc, updateDoc, deleteDoc, setDoc, query, where, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const $ = s => document.querySelector(s);
@@ -303,7 +310,86 @@ async function renderDetail(id) {
 }
 
 /* ------------------------------------------------------------ routing */
+/* ------------------------------------------------------------ unlock view */
+const BOOKS = [['touchstone1', 'Touchstone 1'], ['touchstone2', 'Touchstone 2'], ['touchstone3', 'Touchstone 3'], ['touchstone4', 'Touchstone 4']];
+const ui = { uid: '', book: 'touchstone1' };
+
+async function renderUnlocks(toast) {
+  toast = toast || state.pendingToast;
+  state.pendingToast = '';
+  const users = [...state.users.entries()]
+    .sort((a, b) => (a[1].name || a[1].email || '').localeCompare(b[1].name || b[1].email || ''));
+  if (!users.length) {
+    app.replaceChildren(h('section', { class: 'sheet' }, h('h2', { text: 'Unlock quizzes' }),
+      h('p', { class: 'note', text: 'No students have created an account yet.' })));
+    return;
+  }
+  if (!ui.uid || !state.users.has(ui.uid)) ui.uid = users[0][0];
+  app.replaceChildren(h('p', { class: 'note', text: 'Loading…' }));
+
+  const current = new Set();
+  try {
+    const snap = await getDocs(query(collection(db, 'unlocks'), where('uid', '==', ui.uid)));
+    snap.forEach(d => { const x = d.data(); current.add(`${x.book}_${x.unit}`); });
+  } catch (err) {
+    console.error(err);
+    app.replaceChildren(h('p', { class: 'err', text: 'Couldn’t load unlocks. Check your connection, and that you published the updated Firestore rules.' }));
+    return;
+  }
+
+  const studentSel = h('select', { onchange: e => { ui.uid = e.target.value; renderUnlocks(); } },
+    users.map(([uid, u]) => h('option', { value: uid, text: u.name || u.email, selected: uid === ui.uid })));
+  const bookSel = h('select', { onchange: e => { ui.book = e.target.value; renderUnlocks(); } },
+    BOOKS.map(([id, label]) => h('option', { value: id, text: label, selected: id === ui.book })));
+
+  const boxes = [];
+  const grid = h('div', { class: 'ugrid' }, Array.from({ length: 12 }, (_, i) => {
+    const unit = `unit${i + 1}`;
+    const sub = state.subs.find(s => s.uid === ui.uid && s.book === ui.book && s.unit === unit);
+    const cb = h('input', { type: 'checkbox', 'aria-label': `Unlock Unit ${i + 1}` });
+    cb.checked = current.has(`${ui.book}_${unit}`);
+    boxes.push(cb);
+    return h('label', { class: 'ucell' }, cb, h('span', { class: 'un', text: `Unit ${i + 1}` }),
+      sub ? h('span', { class: 'chip ok', text: sub.released ? 'Released' : 'Submitted' }) : null);
+  }));
+
+  const msg = h('p', { class: 'toast', role: 'status' });
+  const buttons = [];
+  const mk = (text, cls, fn) => { const b = h('button', { class: 'btn ' + cls, type: 'button', text, onclick: fn }); buttons.push(b); return b; };
+
+  const save = async () => {
+    buttons.forEach(b => { b.disabled = true; });
+    try {
+      const ops = [];
+      boxes.forEach((cb, i) => {
+        const unit = `unit${i + 1}`, k = `${ui.book}_${unit}`, id = `${ui.uid}_${k}`, was = current.has(k);
+        if (cb.checked && !was) ops.push(setDoc(doc(db, 'unlocks', id), { uid: ui.uid, book: ui.book, unit, unlockedAt: serverTimestamp() }));
+        if (!cb.checked && was) ops.push(deleteDoc(doc(db, 'unlocks', id)));
+      });
+      await Promise.all(ops);
+      renderUnlocks(ops.length ? `Saved. ${ops.length} ${ops.length === 1 ? 'change' : 'changes'} made.` : 'Nothing to change.');
+    } catch (err) {
+      console.error(err);
+      msg.className = 'toast err';
+      msg.textContent = 'Couldn’t save. Check your connection and the Firestore rules.';
+      buttons.forEach(b => { b.disabled = false; });
+    }
+  };
+
+  app.replaceChildren(h('section', { class: 'sheet' },
+    toast ? h('p', { class: 'toast ok', role: 'status', text: toast }) : null,
+    h('h2', { text: 'Unlock quizzes' }),
+    h('p', { class: 'note', text: 'Students can only open and submit the quizzes you tick here. Locking a quiz hides it again, but never deletes anything they already submitted.' }),
+    h('div', { class: 'filters' }, h('label', {}, 'Student', studentSel), h('label', {}, 'Book', bookSel)),
+    grid, msg,
+    h('div', { class: 'row' },
+      mk('Save changes', '', save),
+      mk('Tick all', 'quiet', () => boxes.forEach(b => { b.checked = true; })),
+      mk('Untick all', 'quiet', () => boxes.forEach(b => { b.checked = false; })))));
+}
+
 function route() {
+  if (location.hash === '#unlocks') { renderUnlocks(); return; }
   const m = location.hash.match(/^#sub=(.+)$/);
   if (m) renderDetail(decodeURIComponent(m[1])); else renderList();
 }
