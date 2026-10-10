@@ -88,6 +88,8 @@ a.unit:hover{background:color-mix(in srgb,var(--mark) 22%,transparent)}
 .unit .u{font-family:var(--head);font-weight:600;font-size:1.15rem}
 .unit .act{font-weight:700;min-width:5.5em;text-align:right}
 .unit.off{color:var(--ink-soft)}
+.unit.test{border-left:5px solid var(--mark);padding-left:12px;background:color-mix(in srgb,var(--mark) 12%,transparent)}
+.unit .u small{display:block;font-family:var(--body);font-weight:400;font-size:.9rem;color:var(--ink-soft)}
 .unit.off .act{color:var(--ink-soft);font-weight:400}
 .chip{font-size:.9rem;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
 .chip.ok{background:var(--ok-bg);color:var(--ok)}
@@ -190,7 +192,13 @@ const BOOKS = [
   { id: 'touchstone3', name: 'Touchstone 3', level: 'Intermediate',      color: '#6B4FB3' },
   { id: 'touchstone4', name: 'Touchstone 4', level: 'High intermediate', color: '#B4600B' }
 ];
-const UNIT_COUNT = 12;
+const ITEMS = [
+  ...[1, 2, 3, 4, 5, 6].map(n => ({ key: `unit${n}`, label: `Unit ${n}` })),
+  { key: 'test1', label: 'Written Test 1', hint: 'Units 1–6', test: true },
+  ...[7, 8, 9, 10, 11, 12].map(n => ({ key: `unit${n}`, label: `Unit ${n}` })),
+  { key: 'test2', label: 'Written Test 2', hint: 'Units 7–12', test: true },
+  { key: 'test3', label: 'Written Test 3', hint: 'All 12 units', test: true }
+];
 // Every exam page must carry this attribute on <html>. It lets the menu tell a real exam
 // from a missing page, even if the host answers unknown URLs with a fallback page.
 const EXAM_MARKER = ['data', 'touchstone', 'exam'].join('-');
@@ -296,8 +304,8 @@ function renderBooks() {
 }
 
 const probeCache = new Map();
-function examExists(book, n) {
-  const url = `${book}/unit${n}.html`;
+function examExists(book, key) {
+  const url = `${book}/${key}.html`;
   if (!probeCache.has(url)) {
     probeCache.set(url, fetch(url, { cache: 'no-store' })
       .then(async r => r.ok && (await r.text()).includes(EXAM_MARKER))
@@ -339,18 +347,16 @@ async function showBook(id) {
   $('#pickPrompt').hidden = true;
   $('#unitsBlock').hidden = false;
   $('#unitsTitle').textContent = book.name;
-  $('#unitsHint').textContent = `${UNIT_COUNT} quizzes`;
+  $('#unitsHint').textContent = '12 units and 3 written tests';
   const list = $('#units');
   list.innerHTML = '';
 
-  const found = await Promise.all(
-    Array.from({ length: UNIT_COUNT }, (_, i) => examExists(id, i + 1))
-  );
+  const found = await Promise.all(ITEMS.map(it => examExists(id, it.key)));
   if (token !== state.token) return; // a newer pick replaced this one
 
   found.forEach((exists, i) => {
-    const n = i + 1;
-    const unitKey = `unit${n}`;
+    const item = ITEMS[i];
+    const unitKey = item.key;
     const sub = state.subs.get(`${id}_${unitKey}`);
     const li = document.createElement('li');
 
@@ -369,10 +375,12 @@ async function showBook(id) {
 
     const open = exists && !locked;
     const el = document.createElement(open ? 'a' : 'div');
-    el.className = 'unit' + (open ? '' : ' off');
+    el.className = 'unit' + (open ? '' : ' off') + (item.test ? ' test' : '');
     if (open) el.href = `${id}/${unitKey}.html`;
     el.innerHTML = '<span class="u"></span><span class="chip"></span><span class="act"></span>';
-    el.querySelector('.u').textContent = `Unit ${n}`;
+    const u = el.querySelector('.u');
+    u.textContent = item.label;
+    if (item.hint) { const sm = document.createElement('small'); sm.textContent = item.hint; u.append(sm); }
     const chipEl = el.querySelector('.chip');
     if (chip) { chipEl.textContent = chip; chipEl.classList.add(cls); } else { chipEl.remove(); }
     el.querySelector('.act').textContent = action;
