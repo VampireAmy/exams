@@ -2,7 +2,7 @@
 // Firebase console > Project settings > General > Your apps > Web app > SDK setup and configuration
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAE1atiiY0I8dNQhvhOkSeAicLOaCrQo70",
@@ -22,4 +22,4 @@ export const isConfigured = !firebaseConfig.apiKey.startsWith("PASTE");
 
 export const app = isConfigured ? initializeApp(firebaseConfig) : null;
 export const auth = isConfigured ? getAuth(app) : null;
-export const db = isConfigured ? getFirestore(app) : null;
+export const db = isConfigured ? initializeFirestore(app, { experimentalAutoDetectLongPolling: true }) : null;
