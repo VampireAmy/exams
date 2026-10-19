@@ -99,16 +99,19 @@ export function startExam(exam) {
 
     // A quiz that hasn't been submitted yet must be unlocked by the teacher first.
     let unlocked = !!sub;
+    let lookupFailed = false;
     if (!sub) {
       try {
         unlocked = (await getDoc(doc(db, 'unlocks', `${user.uid}_${exam.book}_${exam.unit}`))).exists();
-      } catch (err) { console.error(err); unlocked = false; }
+      } catch (err) { console.error(err); unlocked = false; lookupFailed = true; }
     }
     if (!unlocked) {
       root.replaceChildren(
         h('a', { class: 'back', href: back, text: 'Back to quizzes' }),
         h('h1', { text: exam.title }),
-        h('p', { class: 'banner info', text: 'This quiz is locked. Your teacher will unlock it when it’s time.' }));
+        h('p', { class: 'banner info', text: lookupFailed
+          ? 'We couldn’t check whether this quiz is unlocked. Check your internet connection, then reload this page.'
+          : 'This quiz is locked. Your teacher will unlock it when it’s time.' }));
       return;
     }
 
