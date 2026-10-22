@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Connection check</title>
+<style>
+:root{--ink:#14213D;--soft:#4A5878;--paper:#FBFCFE;--desk:#E9EFF8;--rule:#C9D6EA}
+@media (prefers-color-scheme:dark){:root{--ink:#E8EEFB;--soft:#A9B6D3;--paper:#18213A;--desk:#0F1628;--rule:#2C3858}}
+body{margin:0;background:var(--desk);color:var(--ink);font:400 1rem/1.5 system-ui,-apple-system,'Segoe UI',sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 14px 60px}
+h1{margin:0 0 6px;font-size:1.5rem}
+p{margin:0 0 14px;color:var(--soft)}
+pre{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:14px;white-space:pre-wrap;word-break:break-word;font:0.92rem/1.5 ui-monospace,Menlo,Consolas,monospace}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+  <h1>Connection check</h1>
+  <p>Wait until the last line says “Done”, then take a screenshot of this page and send it to your teacher. It shows no passwords.</p>
+  <pre id="out" role="status">Running…</pre>
+  <p><a href="index.html">Back to the quizzes</a></p>
+</main>
+<script type="module">
+import { auth, db, isConfigured } from './firebase-init.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const out = document.getElementById('out');
+const lines = [];
+const say = (ok, text) => {
+  lines.push((ok === true ? 'OK    ' : ok === false ? 'FAIL  ' : 'INFO  ') + text);
+  out.textContent = lines.join('\n');
+};
+const timeout = ms => new Promise((_, rej) => setTimeout(() => rej(new Error(`no answer after ${ms / 1000} seconds`)), ms));
+
+say(null, 'Time: ' + new Date().toString());
+say(null, 'Browser: ' + navigator.userAgent);
+say(navigator.onLine, 'Phone says it is online: ' + navigator.onLine);
+
+try { localStorage.setItem('ts-check', '1'); localStorage.removeItem('ts-check'); say(true, 'Browser storage works'); }
+catch (e) { say(false, 'Browser storage is blocked: ' + e.message); }
+
+// Does this browser hold an old copy of the site files?
+async function fileCheck(path, marker, label) {
+  try {
+    const saved = await (await fetch(path)).text();
+    const fresh = await (await fetch(path, { cache: 'no-store' })).text();
+    const freshOk = fresh.includes(marker), savedOk = saved.includes(marker);
+    if (!freshOk) { say(false, `${label}: the latest version is not on the website yet`); return; }
+    say(savedOk, `${label}: ` + (savedOk ? 'this browser has the latest version' : 'this browser is using an OLD saved copy'));
+  } catch (e) { say(false, `${label}: could not be loaded (${e.message})`); }
+}
+await fileCheck('index.html', 'unlocksOk', 'Menu page');
+await fileCheck('exam-engine.js', 'lookupFailed', 'Quiz page code');
+await fileCheck('firebase-init.js', 'experimentalForceLongPolling', 'Connection settings (long polling)');
+
+// Can this browser reach Google's servers? (A blocker, VPN or network rule can stop these.)
+for (const [host, label] of [['firestore.googleapis.com', 'Google database'], ['identitytoolkit.googleapis.com', 'Google sign-in']]) {
+  try { await Promise.race([fetch(`https://${host}/`, { mode: 'no-cors', cache: 'no-store' }), timeout(10000)]); say(true, `Can reach the ${label} servers`); }
+  catch (e) { say(false, `Cannot reach the ${label} servers (${e.message}). Something is blocking it.`); }
+}
+
+if (!isConfigured) {
+  say(false, 'Firebase is not set up in firebase-init.js');
+  say(null, 'Done');
+} else {
+  onAuthStateChanged(auth, async user => {
+    if (!user) { say(false, 'Not signed in. Sign in on the quiz page first, then open this page again.'); say(null, 'Done'); return; }
+    say(true, 'Signed in as ' + user.email);
+    say(null, 'Account ID: ' + user.uid);
+    try {
+      const snap = await Promise.race([getDocs(query(collection(db, 'unlocks'), where('uid', '==', user.uid))), timeout(20000)]);
+      const ids = [];
+      snap.forEach(d => ids.push(d.id.replace(user.uid + '_', '')));
+      say(ids.length > 0, `Unlocked quizzes found for this account: ${ids.length}` + (ids.length ? '\n        ' + ids.join('\n        ') : ''));
+    } catch (e) {
+      say(false, `Could not read the unlocked quizzes: ${e.code || ''} ${e.message}`);
+    }
+    say(null, 'Done');
+  });
+}
+</script>
+</body>
+</html>
