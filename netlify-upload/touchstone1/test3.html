@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Written Test 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js?v=2';
+
+const tf = ['True', 'False'];
+const fBox = ['I mean, where can you hear good music?', 'What do you play?', 'Are you a student?', 'Are you studying law, like Joe?', 'I mean, where do you study?'];
+const gBox = ['boring', 'casual', 'doing', 'formal', 'get', 'making', 'meat', 'sunny'];
+const hExpr = ['see a lot of famous people', 'spend a day at the beach', 'take a bus tour', 'sit at an outdoor café', 'go to a show or concert', 'see a different movie'];
+const canCant = ['can', "can't"];
+const sel = (id, text, options, points = 1) => ({ id, type: 'select', points, text, options });
+
+startExam({
+  book: 'touchstone1',
+  unit: 'test3',
+  title: 'Written Test 3 (all 12 units)',
+  total: 102,
+  sections: [
+    { letter: 'A', title: 'Erica and Tim are talking about Tim’s schedule this semester. Listen and choose the one true sentence for each item.',
+      audio: 'audio/test3-a.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1.', options: ['Tim is getting a lot of sleep these days.', 'Tim is very tired these days.'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2.', options: ['Tim is studying a lot.', 'Tim is working full-time.'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3.', options: ["Tim isn't eating any good meals.", 'Tim is eating one good meal a day.'] },
+        { id: 'A4', type: 'choice', points: 2, text: '4.', options: ['Tim played football in the cold last Saturday.', 'Tim sat outside in the cold last Saturday.'] }
+      ] },
+
+    { letter: 'B', title: 'Ethan and Lora are talking about the weekend. Listen and choose the correct answers.',
+      audio: 'audio/test3-b.mp3',
+      questions: [
+        { id: 'B1', type: 'choice', points: 2, text: '1. Where did Lora go last weekend?', options: ["To her friend Angel's party", "To her sister's house"] },
+        { id: 'B2', type: 'choice', points: 2, text: '2. What kind of food did Angel serve?', options: ['Mexican', 'Brazilian'] },
+        { id: 'B3', type: 'choice', points: 2, text: '3. Who did Ethan dance with?', options: ["Angel's girlfriend", "Angel's sister"] },
+        { id: 'B4', type: 'choice', points: 2, text: '4. How often does Angel have parties?', options: ['A couple of times a month', 'Once a month'] }
+      ] },
+
+    { letter: 'C', title: 'Read the answers. Then complete the questions. Use the verb be or the simple present. Use capital letters where necessary.',
+      intro: 'Example: A: Where are you from?  B: I’m from Mexico City.',
+      questions: [
+        { id: 'C1', type: 'text', points: 2, text: '1. A: What ______ ?  B: My sisters? They’re very friendly and outgoing.' },
+        { id: 'C2', type: 'text', points: 2, text: '2. A: Where ______ ?  B: My parents are at home today.' },
+        { id: 'C3', type: 'text', points: 2, text: '3. A: ______ on the weekends?  B: Yes, she does. My mother works every weekend.' },
+        { id: 'C4', type: 'text', points: 2, text: '4. A: ______ ?  B: Yeah, the students in this class are very smart.' },
+        { id: 'C5', type: 'text', points: 2, text: '5. A: Where ______ ?  B: My friends and I usually go for coffee after class.' }
+      ] },
+
+    { letter: 'D', title: 'Complete the sentences. Use the present continuous and the words in parentheses. Use contractions where possible. Use capital letters where necessary.',
+      intro: 'Example: A: Are you learning (you / learn) a new sport this winter?  B: Yeah, we’re taking (we / take) a bowling class at the student center.',
+      questions: [
+        { id: 'D1', type: 'text', points: 1, text: '1A. A: ______ (your best friend / exercise) enough these days?' },
+        { id: 'D2', type: 'text', points: 1, text: '1B. B: Well, ______ (he / walk) to school this semester.' },
+        { id: 'D3', type: 'text', points: 1, text: '2A. A: What ______ (your parents / do) right now?' },
+        { id: 'D4', type: 'text', points: 1, text: '2B. B: ______ (they / run) in the park.' },
+        { id: 'D5', type: 'text', points: 1, text: '3A. A: ______ (you / enjoy) the beach today?' },
+        { id: 'D6', type: 'text', points: 1, text: '3B. B: No, ______ (I / not have) any fun. It’s too cold and windy.' }
+      ] },
+
+    { letter: 'E', title: 'Read about a neighborhood. Choose the correct words.',
+      boxes: [{ text: 'I really like my neighborhood. There’s (1) a / a couple of cheap movie theater and (2) an / some excellent restaurants. And there are (3) one / a couple of great stores. There are (4) no / a lot of nice places, like museums, outdoor cafés, two clubs, and a beautiful park, but we don’t have a mall. We really need (5) a / no mall!' }],
+      questions: [
+        sel('E1', 'Blank (1)', ['a', 'a couple of']),
+        sel('E2', 'Blank (2)', ['an', 'some']),
+        sel('E3', 'Blank (3)', ['one', 'a couple of']),
+        sel('E4', 'Blank (4)', ['no', 'a lot of']),
+        sel('E5', 'Blank (5)', ['a', 'no'])
+      ] },
+
+    { letter: 'F', title: 'Complete the conversation with the questions in the box. Use each question only once. There is one extra question.',
+      boxes: [
+        { title: 'Questions', text: fBox.join('\n') },
+        { title: 'Conversation', text:
+          'Joe: Hey, Linda. This is my friend Marco.\n' +
+          'Linda: Hi. It’s nice to meet you.\n' +
+          'Marco: Nice to meet you.\n' +
+          'Joe: Marco’s from Italy.\n' +
+          'Linda: Italy? Really? So are you a student here?\n' +
+          'Marco: No, I’m just on vacation. How about you? (1) ______\n' +
+          'Linda: Yes. Joe and I go to the same school.\n' +
+          'Marco: Really? (2) ______\n' +
+          'Linda: No, I’m studying music.\n' +
+          'Marco: That’s interesting. (3) ______\n' +
+          'Linda: The piano.\n' +
+          'Marco: Great. So, um, do you ever go to concerts here? (4) ______\n' +
+          'Linda: Oh, there are some great jazz clubs downtown.' }
+      ],
+      questions: [1, 2, 3, 4].map(n => sel(`F${n}`, `Blank (${n})`, fBox)) },
+
+    { letter: 'G', title: 'Read the sentences. Then correct the words in brackets using the words from the box. There are two extra words.',
+      boxes: [{ title: 'Words', text: gBox.join('    ') }],
+      questions: [
+        sel('G1', '1. David was at the beach, and it was hot and [rainy]. He got a bad sunburn.', gBox),
+        sel('G2', '2. My sister is at the gym right now. She’s [going] aerobics.', gBox),
+        sel('G3', '3. I like to wear [dressy] clothes after work. I usually go home and put on jeans and a T-shirt.', gBox),
+        sel('G4', '4. This neighborhood is very [exciting]. There’s no place to go. There’s no mall or movie theater – just a lot of apartment buildings.', gBox),
+        sel('G5', '5. I love [seafood] like chicken, beef, and lamb.', gBox),
+        sel('G6', '6. I went on a trip with my brother. It was terrible. We didn’t [go] along.', gBox)
+      ] },
+
+    { letter: 'H', title: 'Complete the questions and answers. Choose the correct expression from the box, and choose can or can’t. There are two extra expressions.',
+      intro: 'Example: A: Can you see a different movie every night in this neighborhood?  B: No, you can’t. There’s only one movie theater.',
+      boxes: [{ title: 'Expressions', text: hExpr.join('\n') }],
+      questions: [
+        sel('H1', '1A. A: Can you ___ at night?', hExpr),
+        sel('H2', '1B. B: No, you ___. The restaurants close early around here.', canCant),
+        sel('H3', '2A. A: Can you ___ on the street?', hExpr),
+        sel('H4', '2B. B: Yes, you ___. There are a lot of celebrities around here.', canCant),
+        sel('H5', '3A. A: Can you ___ of the island?', hExpr),
+        sel('H6', '3B. B: Yes, you ___. Or you can walk around and see it. It’s really small.', canCant)
+      ] },
+
+    { letter: 'I', title: 'Choose the correct words.',
+      questions: [
+        sel('I1', '1A. A: Do you eat ___ vegetables?', ['many', 'much']),
+        sel('I2', '1B. B: Not really. But I eat a lot of ___.', ['potato', 'potatoes']),
+        sel('I3', '2A. A: Do you eat ___ fruit?', ['many', 'a lot of']),
+        sel('I4', '2B. B: Well, I have ___ every day.', ['an apple', 'apple']),
+        sel('I5', '3A. A: How ___ coffee do you drink a day?', ['many', 'much']),
+        sel('I6', '3B. B: Actually, I don’t drink ___. I don’t like coffee.', ['some', 'any']),
+        sel('I7', '4A. A: How ___ snacks do you eat a day?', ['many', 'much']),
+        sel('I8', '4B. B: I don’t usually have snacks. But I eat ___ ice cream!', ['a lot of', 'many'])
+      ] },
+
+    { letter: 'J', title: 'Complete the conversation. Choose the correct words.',
+      boxes: [{ title: 'Conversation', text:
+        'A: Let’s take a break. I’m hungry.\n' +
+        'B: (1) ______ Would you like to go out? There are some good lunch places around here.\n' +
+        'A: Well, I’m on a diet, so I don’t want a big lunch (2) ______ .\n' +
+        'B: OK. (3) ______ How about the coffee shop near here?\n' +
+        'A: Oh, that’s great. It’s right next door to the electronics store. I need to go there after lunch. I want to get my neighbor’s son a GameZ for his birthday.\n' +
+        'B: A GameZ? What’s that?\n' +
+        'A: Oh, it’s (4) ______ video game. He really, really wants one. And he’s a really great kid.\n' +
+        'B: (5) ______ That’s nice of you.' }],
+      questions: [
+        sel('J1', 'Blank (1)', ['Me too.', 'How about you?']),
+        sel('J2', 'Blank (2)', ['or something', 'or anything']),
+        sel('J3', 'Blank (3)', ["Let's see.", 'Really?']),
+        sel('J4', 'Blank (4)', ['a kind of', 'kind of like']),
+        sel('J5', 'Blank (5)', ['Happy birthday!', 'Good for you.'])
+      ] },
+
+    { letter: 'K', title: 'Complete the questions and answers. Use the simple past and the verbs in parentheses. Use capital letters where necessary.',
+      questions: [
+        sel('K1a', '1A. A: ___ you', ['Did', 'Do', 'Does', 'Were']),
+        sel('K1b', '1A. ___ (do) anything fun last night?', ['do', 'did', 'does', 'done']),
+        sel('K1c', '1B. B: Not really. I just ___ (stay) home.', ['stay', 'stayed', 'stays']),
+        sel('K2a', '2A. A: Where ___ (be) your parents last week?', ['was', 'were', 'are']),
+        sel('K2b', '2B. B: They ___ (go) snorkeling in Thailand.', ['go', 'went', 'goes']),
+        sel('K2c', '2B. It was fun, but my mom ___ (get) sick.', ['get', 'got', 'gets']),
+        sel('K3a', '3A. A: Where ___ your brother', ['did', 'do', 'does', 'was']),
+        sel('K3b', '3A. ___ (go) Saturday night?', ['go', 'went', 'goes']),
+        sel('K3c', '3B. B: He ___ (meet) some friends for dinner.', ['meet', 'met', 'meets']),
+        sel('K4a', '4A. A: ___ you', ['Did', 'Do', 'Does', 'Were']),
+        sel('K4b', '4A. ___ (check) your email yesterday?', ['check', 'checked', 'checks']),
+        sel('K4c', '4B. B: No, but I ___ (chat) with some friends online.', ['chat', 'chatted', 'chats'])
+      ] },
+
+    { letter: 'L', title: 'Choose the correct words.',
+      questions: [
+        sel('L1', '1A. A: What ___ do tonight?', ['do you like to', 'would you like to']),
+        sel('L2', '1B. B: I ___ stay home. There’s a football game on TV.', ["'d like to", 'like to']),
+        sel('L3', '2A. A: Do you ___ go to the beach tomorrow?', ['like to', 'want to']),
+        sel('L4', '2B. B: Yeah! I ___ work tomorrow.', ["don't have to", "don't like to"]),
+        sel('L5', '3A. A: Do you ___ shop for clothes?', ['would like to', 'need to']),
+        sel('L6', '3B. B: Yeah, I do. I ___ go shopping today!', ['want to', 'like to'])
+      ] },
+
+    { letter: 'M', title: 'Read the email. Then choose the correct answers.',
+      boxes: [{ title: 'Email', text:
+        'FROM: Rick Barton\nTO: Sarah Jones\nSUBJECT: A friend in Japan?\nSENT: 9:17 a.m.\n\n' +
+        'Dear Sarah,\n\n' +
+        'Well, how is Tokyo? Are you studying hard? Do you have any free time? Can you take any vacations?\n\n' +
+        'I talked to my aunt, and she knows a woman there. Her name is Keiko Noguchi. Keiko lived in New York for two years and studied art history. Now she’s back in Japan. She’s from Kyoto, but she’s living in Tokyo. She’s studying at a university there, and she works part-time at a museum. Anyway, I bet Keiko’s English is pretty good.\n\n' +
+        'My aunt sent an email to Keiko, so Keiko knows you’re in Japan. You can email her at knoguchi1132@cup.org. Keiko wants you to go to Kyoto with her. Kyoto is famous for its gardens and historic temples. And she says you can go and see a traditional show together. She saw a show there last week. She can tell you about it.\n\n' +
+        'Anyway, everybody misses you! And I think about you all the time. Please email me soon!\nRick' }],
+      questions: [
+        { id: 'M1', type: 'choice', points: 2, text: '1. What is Sarah doing in Japan?', options: ["She's going to school.", "She's working.", "She's on vacation."] },
+        { id: 'M2', type: 'choice', points: 2, text: '2. Where does Keiko live?', options: ['In New York', 'In Kyoto', 'In Tokyo'] },
+        { id: 'M3', type: 'choice', points: 2, text: '3. Where does Keiko work?', options: ['At an English school', 'At a museum', 'At a university'] },
+        { id: 'M4', type: 'choice', points: 2, text: '4. What did Keiko see last week?', options: ['A famous garden', 'A historic temple', 'A traditional show'] }
+      ] },
+
+    { letter: 'N', title: 'Read the poster about a food fair in a school. Then choose True or False for each sentence.',
+      boxes: [{ title: 'Come to the Worldwide Food Fair in the Student Center today (Friday)', text:
+        'Do you like to try new foods? Do you want to help your school? Now you can do both! Don’t buy your lunch in the cafeteria today. Come to the Student Center, and take an eating tour of foods from around the world.\n\n' +
+        'You can enjoy delicious food from many different countries! Students in the International Club are making dishes like spicy Mexican seafood, hot Italian pizza, and Vietnamese rice with vegetables. Or try wonderful desserts like mango ice cream and sweet, sticky rice. Even picky eaters can find something good.\n\n' +
+        'The money from each sale at the Worldwide Food Fair goes to help buy new computers for our club. And prices are low! It’s “all you can eat” for $7. Or you can buy a snack for just $3.\n\n' +
+        'Come and join us for fun and food: 11:30 a.m.–1:00 p.m.' }],
+      questions: [
+        { id: 'N1', type: 'choice', points: 1, text: '1. The food fair is in the cafeteria.', options: tf },
+        { id: 'N2', type: 'choice', points: 1, text: '2. Students are cooking a lot of different dishes.', options: tf },
+        { id: 'N3', type: 'choice', points: 1, text: '3. They’re serving Italian seafood and Mexican pizza.', options: tf },
+        { id: 'N4', type: 'choice', points: 1, text: '4. You can try rice ice cream at the food fair.', options: tf },
+        { id: 'N5', type: 'choice', points: 1, text: '5. The money from the food fair goes to the International Club.', options: tf },
+        { id: 'N6', type: 'choice', points: 1, text: '6. The food fair prices are expensive.', options: tf },
+        { id: 'N7', type: 'choice', points: 1, text: '7. You can eat lots of different foods for one price.', options: tf },
+        { id: 'N8', type: 'choice', points: 1, text: '8. Lunch is only $3.', options: tf },
+        { id: 'N9', type: 'choice', points: 1, text: '9. The lunch starts at 11:30 p.m.', options: tf },
+        { id: 'N10', type: 'choice', points: 1, text: '10. The lunch finishes at 1:00 p.m.', options: tf }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

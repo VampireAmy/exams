@@ -24,9 +24,9 @@ a{color:inherit}
   <p><a href="index.html">Back to the quizzes</a></p>
 </main>
 <script type="module">
-import { auth, db, isConfigured } from './firebase-init.js';
+import { auth, db, isConfigured } from './firebase-init.js?v=2';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { collection, getDocsFromServer, query, where } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const out = document.getElementById('out');
 const lines = [];
@@ -55,7 +55,7 @@ async function fileCheck(path, marker, label) {
 }
 await fileCheck('index.html', 'unlocksOk', 'Menu page');
 await fileCheck('exam-engine.js', 'lookupFailed', 'Quiz page code');
-await fileCheck('firebase-init.js', 'experimentalForceLongPolling', 'Connection settings (long polling)');
+await fileCheck('firebase-init.js?v=2', 'experimentalForceLongPolling', 'Connection settings (long polling)');
 
 // Can this browser reach Google's servers? (A blocker, VPN or network rule can stop these.)
 for (const [host, label] of [['firestore.googleapis.com', 'Google database'], ['identitytoolkit.googleapis.com', 'Google sign-in']]) {
@@ -72,10 +72,10 @@ if (!isConfigured) {
     say(true, 'Signed in as ' + user.email);
     say(null, 'Account ID: ' + user.uid);
     try {
-      const snap = await Promise.race([getDocs(query(collection(db, 'unlocks'), where('uid', '==', user.uid))), timeout(20000)]);
+      const snap = await Promise.race([getDocsFromServer(query(collection(db, 'unlocks'), where('uid', '==', user.uid))), timeout(20000)]);
       const ids = [];
       snap.forEach(d => ids.push(d.id.replace(user.uid + '_', '')));
-      say(ids.length > 0, `Unlocked quizzes found for this account: ${ids.length}` + (ids.length ? '\n        ' + ids.join('\n        ') : ''));
+      say(ids.length > 0, `Unlocked quizzes found (the server answered): ${ids.length}` + (ids.length ? '\n        ' + ids.join('\n        ') : ''));
     } catch (e) {
       say(false, `Could not read the unlocked quizzes: ${e.code || ''} ${e.message}`);
     }

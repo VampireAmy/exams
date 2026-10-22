@@ -85,10 +85,10 @@ box-shadow:0 -8px 24px -16px rgba(20,33,61,.5)}
 </div>
 
 <script type="module">
-import { auth, db, isConfigured } from './firebase-init.js';
+import { auth, db, isConfigured } from './firebase-init.js?v=2';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import {
-  collection, getDocs, getDoc, doc, updateDoc, deleteDoc, setDoc, query, where, serverTimestamp
+  collection, getDocsFromServer, getDoc, doc, updateDoc, deleteDoc, setDoc, query, where, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const $ = s => document.querySelector(s);
@@ -137,7 +137,7 @@ async function loadKey(book, unit) {
 }
 
 async function loadAll() {
-  const [u, s] = await Promise.all([getDocs(collection(db, 'users')), getDocs(collection(db, 'submissions'))]);
+  const [u, s] = await Promise.all([getDocsFromServer(collection(db, 'users')), getDocsFromServer(collection(db, 'submissions'))]);
   state.users = new Map();
   u.forEach(d => state.users.set(d.id, d.data()));
   state.subs = [];
@@ -337,7 +337,7 @@ async function renderUnlocks(toast) {
 
   const current = new Set();
   try {
-    const snap = await getDocs(query(collection(db, 'unlocks'), where('uid', '==', ui.uid)));
+    const snap = await getDocsFromServer(query(collection(db, 'unlocks'), where('uid', '==', ui.uid)));
     snap.forEach(d => { const x = d.data(); current.add(`${x.book}_${x.unit}`); });
   } catch (err) {
     console.error(err);
@@ -346,7 +346,7 @@ async function renderUnlocks(toast) {
   }
 
   const studentSel = h('select', { onchange: e => { ui.uid = e.target.value; renderUnlocks(); } },
-    users.map(([uid, u]) => h('option', { value: uid, text: u.name || u.email, selected: uid === ui.uid })));
+    users.map(([uid, u]) => h('option', { value: uid, text: `${u.name || 'No name'} (${u.email || 'no email'})`, selected: uid === ui.uid })));
   const bookSel = h('select', { onchange: e => { ui.book = e.target.value; renderUnlocks(); } },
     BOOKS.map(([id, label]) => h('option', { value: id, text: label, selected: id === ui.book })));
 

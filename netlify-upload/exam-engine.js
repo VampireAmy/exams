@@ -1,8 +1,8 @@
 // Shared quiz engine. Each unit page only supplies its questions (no answers).
-import { auth, db, isConfigured } from './firebase-init.js';
+import { auth, db, isConfigured } from './firebase-init.js?v=2';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import {
-  doc, getDoc, getDocs, setDoc, collection, query, where, serverTimestamp
+  doc, getDoc, getDocFromServer, getDocsFromServer, setDoc, collection, query, where, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const CSS = `
@@ -88,7 +88,7 @@ export function startExam(exam) {
 
     let sub = null;
     try {
-      const snap = await getDocs(query(collection(db, 'submissions'),
+      const snap = await getDocsFromServer(query(collection(db, 'submissions'),
         where('uid', '==', user.uid), where('book', '==', exam.book), where('unit', '==', exam.unit)));
       snap.forEach(d => { sub = d.data(); });
     } catch (err) {
@@ -102,7 +102,7 @@ export function startExam(exam) {
     let lookupFailed = false;
     if (!sub) {
       try {
-        unlocked = (await getDoc(doc(db, 'unlocks', `${user.uid}_${exam.book}_${exam.unit}`))).exists();
+        unlocked = (await getDocFromServer(doc(db, 'unlocks', `${user.uid}_${exam.book}_${exam.unit}`))).exists();
       } catch (err) { console.error(err); unlocked = false; lookupFailed = true; }
     }
     if (!unlocked) {

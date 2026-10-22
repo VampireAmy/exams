@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en" data-touchstone-exam>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Touchstone 1 – Written Test 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<main id="exam" class="wrap"></main>
+<script type="module">
+import { startExam } from '../exam-engine.js?v=2';
+
+const tf = ['True', 'False'];
+const countries = ['In Peru', 'In Colombia', 'In Ecuador'];
+const prices = ["It's", "They're"].flatMap(w => ['$12', '$20', '$35', '$70'].map(p => `${w} ${p}.`));
+const eExpr = ['visit the exhibitions', 'walk around', 'buy some souvenirs', 'take a ferry', 'go up the tower', 'take a bus tour'];
+const eOpts = eExpr.flatMap(x => [`can ${x}`, `can't ${x}`]);
+const jBox = ["Yes, and it was embarrassing. I made a mistake.", "I don't know, but she's young.", "Great! I passed! I'm so happy.",
+  'I get nervous in my karate class.', 'I went to a club with friends.', 'It was really hard. I spent all night doing it.'];
+const order = ['1', '2', '3'];
+const yesNo = ['Yes', 'No'];
+
+const gWord = (id, verb, word) => ({ id, type: 'select', points: 0.5, text: `${verb}: ${word}`, options: yesNo });
+
+startExam({
+  book: 'touchstone1',
+  unit: 'test2',
+  title: 'Written Test 2 (Units 7–12)',
+  total: 100,
+  sections: [
+    { letter: 'A', title: 'Emma and Jack are talking about Jack’s vacation. Listen and choose the correct answers.',
+      audio: 'audio/test2-a.mp3',
+      questions: [
+        { id: 'A1', type: 'choice', points: 2, text: '1. What countries did Jack go to?', options: ['Brazil, Peru, and Ecuador', 'Brazil, Peru, and Colombia', 'Peru, Ecuador, and Colombia'] },
+        { id: 'A2', type: 'choice', points: 2, text: '2. What was Jack’s favorite city?', options: ['Lima', 'Cuzco', 'Puno'] },
+        { id: 'A3', type: 'choice', points: 2, text: '3. Where was it hot?', options: countries },
+        { id: 'A4', type: 'choice', points: 2, text: '4. Where did Jack eat locro, a kind of soup?', options: countries }
+      ] },
+
+    { letter: 'B', title: 'Eva is telling Kyle about her busy schedule. Listen. Four of these sentences are true. Choose True or False for each one.',
+      audio: 'audio/test2-b.mp3',
+      questions: [
+        { id: 'B1', type: 'choice', points: 1, text: 'a. Eva is taking a volleyball class.', options: tf },
+        { id: 'B2', type: 'choice', points: 1, text: 'b. Eva isn’t living with her parents now.', options: tf },
+        { id: 'B3', type: 'choice', points: 1, text: 'c. Eva has time to go out with her friends.', options: tf },
+        { id: 'B4', type: 'choice', points: 1, text: 'd. Eva went to the movies every weekend in the past.', options: tf },
+        { id: 'B5', type: 'choice', points: 1, text: 'e. Kyle doesn’t want to dance.', options: tf },
+        { id: 'B6', type: 'choice', points: 1, text: 'f. Kyle doesn’t like to go to the movies.', options: tf },
+        { id: 'B7', type: 'choice', points: 1, text: 'g. Eva can’t go to the movies on Saturday.', options: tf },
+        { id: 'B8', type: 'choice', points: 1, text: 'h. Kyle can go to the volleyball game at 2:30.', options: tf }
+      ] },
+
+    { letter: 'C', title: 'Read the answers. Then complete the questions. Use the present continuous. Use contractions where possible. Use capital letters where necessary.',
+      questions: [
+        { id: 'C1', type: 'text', points: 1, text: '1. A: Look – there’s your dad. Where ______ (go)?  B: Um, I think he’s going to the supermarket.' },
+        { id: 'C2', type: 'text', points: 1, text: '2. A: I like this music. Who ______ (play)?  B: It’s my sister’s new band.' },
+        { id: 'C3', type: 'text', points: 1, text: '3. A: How are you? ______ (study) hard this semester?  B: Yes, I am. Really hard.' },
+        { id: 'C4', type: 'text', points: 1, text: '4. A: How’s your sister? ______ (work) at the restaurant?  B: No, she’s not. She has a new job in a bank.' },
+        { id: 'C5', type: 'text', points: 1, text: '5. A: Are your parents OK? How ______ (do)?  B: They’re great, thanks. They’re on vacation this week.' }
+      ] },
+
+    { letter: 'D', title: 'Look at the picture. Choose the correct words in the questions. Then choose the answers with It’s or They’re and the price.',
+      image: { src: 'img/test2-d.jpg', alt: 'A store window display with a bracelet, earrings, gloves and a briefcase. Each item has a price tag.' },
+      questions: [
+        { id: 'D1', type: 'select', points: 1, text: '1A. How much ___ bracelet?', options: ['is this', 'are these'] },
+        { id: 'D2', type: 'select', points: 1, text: '1B. Answer', options: prices },
+        { id: 'D3', type: 'select', points: 1, text: '2A. How much ___ earrings?', options: ['is that', 'are those'] },
+        { id: 'D4', type: 'select', points: 1, text: '2B. Answer', options: prices },
+        { id: 'D5', type: 'select', points: 1, text: '3A. How much ___ gloves?', options: ['is this', 'are these'] },
+        { id: 'D6', type: 'select', points: 1, text: '3B. Answer', options: prices },
+        { id: 'D7', type: 'select', points: 1, text: '4A. How much ___ briefcase?', options: ['is that', 'are those'] },
+        { id: 'D8', type: 'select', points: 1, text: '4B. Answer', options: prices }
+      ] },
+
+    { letter: 'E', title: 'Complete the email. Use can or can’t and the expressions in the box. There is one extra expression.',
+      boxes: [
+        { title: 'Expressions', text: eExpr.join('\n') },
+        { title: 'Email', text:
+          'Dear Alyssa,\n\n' +
+          'I’m so excited that you can visit me next spring! There’s so much to do. You (1) ______ the historic center and see all the old buildings. Then you can try some local food at an outdoor café. You (2) ______ now because they closed all the little streets to cars and buses, but it’s perfect for walking. There are also some great museums. You (3) ______ on Mondays – they’re closed – but any other day is fine. You (4) ______ to the island. There’s an old castle on the island, but you (5) ______ – it’s not open to the public. It’s not safe. What else? Oh, we have to go shopping.\n\n' +
+          'OK. I can’t wait!\nJeannette' }
+      ],
+      questions: [1, 2, 3, 4, 5].map(n => ({ id: `E${n}`, type: 'select', points: 1, text: `Blank (${n})`, options: eOpts })) },
+
+    { letter: 'F', title: 'Choose the correct answers.',
+      questions: [
+        { id: 'F1', type: 'select', points: 1, text: '1. Do you like ___ food?', options: ['Ecuador', 'Ecuadorian'] },
+        { id: 'F2', type: 'select', points: 1, text: '2. Is your grandfather from ___?', options: ['Vietnam', 'Vietnamese'] },
+        { id: 'F3', type: 'select', points: 1, text: '3. My sister spoke ___ when she was on vacation.', options: ['Italy', 'Italian'] },
+        { id: 'F4', type: 'select', points: 1, text: '4. Did you see the pyramids in ___?', options: ['Egypt', 'Egyptian'] },
+        { id: 'F5', type: 'select', points: 1, text: '5. Did you go to ___ on your trip?', options: ['China', 'Chinese'] },
+        { id: 'F6', type: 'select', points: 1, text: '6. My mother loves ___ food.', options: ['Morocco', 'Moroccan'] }
+      ] },
+
+    { letter: 'G', title: 'Two words go with each verb. Choose Yes if the word goes with the verb and No if it doesn’t.',
+      questions: [
+        gWord('G1', 'do', 'karate'), gWord('G2', 'do', 'volleyball'), gWord('G3', 'do', 'bowling'), gWord('G4', 'do', 'weight training'),
+        gWord('G5', 'play', 'soccer'), gWord('G6', 'play', 'biking'), gWord('G7', 'play', 'basketball'), gWord('G8', 'play', 'ski'),
+        gWord('G9', 'go', 'running'), gWord('G10', 'go', 'football'), gWord('G11', 'go', 'aerobics'), gWord('G12', 'go', 'shopping')
+      ] },
+
+    { letter: 'H', title: 'Complete the conversation. Use the simple past and the words in parentheses. Use capital letters where necessary.',
+      boxes: [{ title: 'Conversation', text:
+        'A: Hey, Jackie. Look at this photo. (1) ______ (I / be) only 14!\n' +
+        'B: Wow, Paul. (2) ______ (you / have) really long hair!\n' +
+        'A: I know. And look at my scarf! (3) ______ (I / wear) it all the time.\n' +
+        'B: Really? A bright yellow scarf? (4) ______ (you / wear) it to school?\n' +
+        'A: Um, yeah, I did. (5) ______ (I / look) so cool. Well, I thought so!\n' +
+        'B: Oh, that’s funny. What (6) ______ (your friends / say)?\n' +
+        'A: They said it was weird.' }],
+      questions: [1, 2, 3, 4, 5, 6].map(n => ({ id: `H${n}`, type: 'text', points: 1, text: `Blank (${n})` })) },
+
+    { letter: 'I', title: 'Choose the correct words.',
+      questions: [
+        { id: 'I1', type: 'select', points: 1, text: '1A. A: How ___ seafood do you eat?', options: ['many', 'much'] },
+        { id: 'I2', type: 'select', points: 1, text: '1B. B: I don’t eat ___. I’m allergic to seafood.', options: ['some', 'any'] },
+        { id: 'I3', type: 'select', points: 1, text: '2A. A: ___ some fruit?', options: ['Would you like', 'Would you like to'] },
+        { id: 'I4', type: 'select', points: 1, text: '2B. B: Yes. ___ have a mango.', options: ["I'd like", "I'd like to"] },
+        { id: 'I5', type: 'select', points: 1, text: '3A. A: How ___ glasses of water do you drink?', options: ['many', 'much'] },
+        { id: 'I6', type: 'select', points: 1, text: '3B. B: Oh, I don’t know. I drink ___ water.', options: ['a lot of', 'much'] }
+      ] },
+
+    { letter: 'J', title: 'Match the questions with the answers. There is one extra answer.',
+      boxes: [{ title: 'Answers', text: jBox.join('\n') }],
+      questions: [
+        { id: 'J1', type: 'select', points: 1, text: '1. How did you do on your test?', options: jBox },
+        { id: 'J2', type: 'select', points: 1, text: '2. What did you do for fun last weekend?', options: jBox },
+        { id: 'J3', type: 'select', points: 1, text: '3. How old is our teacher?', options: jBox },
+        { id: 'J4', type: 'select', points: 1, text: '4. How was your homework last night?', options: jBox },
+        { id: 'J5', type: 'select', points: 1, text: '5. Did you speak in class today?', options: jBox }
+      ] },
+
+    { letter: 'K', title: 'Change the words in brackets to the negative. Write only the new words.',
+      intro: 'Example: I [found some] sunglasses at the café. becomes: didn’t find any',
+      questions: [
+        { id: 'K1', type: 'text', points: 1, text: '1. I [was] in Brazil last month.' },
+        { id: 'K2', type: 'text', points: 1, text: '2. Carla [sold a lot of] sweaters at the student fair.' },
+        { id: 'K3', type: 'text', points: 1, text: '3. I [can go] hiking on Sunday.' },
+        { id: 'K4', type: 'text', points: 1, text: '4. [It’s raining] right now.' },
+        { id: 'K5', type: 'text', points: 1, text: '5. We [have to wear] uniforms at work.' },
+        { id: 'K6', type: 'text', points: 1, text: '6. Jon and Penny [were] at the basketball game.' }
+      ] },
+
+    { letter: 'L', title: 'Choose the correct words.',
+      questions: [
+        { id: 'L1', type: 'select', points: 1, text: '1A. A: What are you doing ___?', options: ['before', 'these days'] },
+        { id: 'L2', type: 'select', points: 1, text: '1B. B: Well, ___ I’m studying for a test.', options: ['this week', 'this season'] },
+        { id: 'L3', type: 'select', points: 1, text: '2A. A: What did you do ___?', options: ['last night', 'right now'] },
+        { id: 'L4', type: 'select', points: 1, text: '2B. B: I went to bed ___ I got home.', options: ['when', 'before'] },
+        { id: 'L5', type: 'select', points: 1, text: '3A. A: How many classes are you taking ___?', options: ['this semester', 'last month'] },
+        { id: 'L6', type: 'select', points: 1, text: '3B. B: I’m taking four classes ___.', options: ['after', 'right now'] },
+        { id: 'L7', type: 'select', points: 1, text: '4A. A: What did you do ___ you got home?', options: ['after', 'today'] },
+        { id: 'L8', type: 'select', points: 1, text: '4B. B: I went for a walk. ___ I met a friend.', options: ['When', 'Then'] }
+      ] },
+
+    { letter: 'M', title: 'Choose the correct words.',
+      questions: [
+        { id: 'M1', type: 'select', points: 1, text: '1. A: What’s a mandolin?  B: Well, it’s ___ a guitar, but it’s smaller.', options: ['kind of like', 'a kind of'] },
+        { id: 'M2', type: 'select', points: 1, text: '2. A: What do you want for a snack?  B: Something small, like potato chips ___.', options: ['or anything', 'or something'] },
+        { id: 'M3', type: 'select', points: 1, text: '3. A: What’s a buñuelo?  B: It’s ___ Mexican dessert.', options: ['kind of like', 'a kind of'] },
+        { id: 'M4', type: 'select', points: 1, text: '4. A: Are you a vegetarian?  B: Yes, I am. I don’t eat meat ___.', options: ['or anything', 'or something'] },
+        { id: 'M5', type: 'select', points: 1, text: '5. A: Do you want meat with your rice, ___ beef or chicken?  B: No, I’d like shrimp, please.', options: ['like', 'kind of like'] },
+        { id: 'M6', type: 'select', points: 1, text: '6. A: What’s a frittata?  B: Um, it’s ___ an omelet.', options: ['a kind of', 'kind of like'] }
+      ] },
+
+    { letter: 'N', title: 'Put the conversations in the correct order. Choose 1, 2, or 3 for each sentence.',
+      intro: 'Example: 2 Well, let’s see, it was rainy and very cold. / 3 That’s too bad! I’m sorry to hear that. / 1 How was your vacation last month?',
+      questions: [
+        { id: 'N1', type: 'select', points: 1, text: '1. “This sweater? Oh, it’s old. Anyway, where would you like to go for lunch?”', options: order },
+        { id: 'N2', type: 'select', points: 1, text: '1. “Let me think. I know, let’s try that new Turkish place.”', options: order },
+        { id: 'N3', type: 'select', points: 1, text: '1. “I like your sweater. Did you buy it at the mall or something?”', options: order },
+        { id: 'N4', type: 'select', points: 1, text: '2. “Oh, you did? Thank goodness! Was it hard?”', options: order },
+        { id: 'N5', type: 'select', points: 1, text: '2. “I did really well on my test yesterday.”', options: order },
+        { id: 'N6', type: 'select', points: 1, text: '2. “Uh, no. It was pretty easy!”', options: order },
+        { id: 'N7', type: 'select', points: 1, text: '3. “Well, I’m planning a vacation to Greece.”', options: order },
+        { id: 'N8', type: 'select', points: 1, text: '3. “I’m busy. I’m working part-time and taking classes. What are you doing?”', options: order },
+        { id: 'N9', type: 'select', points: 1, text: '3. “What are you doing these days?”', options: order }
+      ] },
+
+    { letter: 'O', title: 'Read the article. Then correct the sentences.',
+      intro: 'Example: “Diana Miller is a jewelry designer.” becomes “Diana Miller is a clothing designer.” Each sentence has one wrong piece of information. Write the whole sentence correctly.',
+      boxes: [{ title: 'Miami Business Today – New business profiles: Diana Miller and Roberto Gomez', text:
+        'This week we spoke to two new business owners.\n\n' +
+        'Diana Miller is a clothing designer. She started her business after she lost her job at a clothing store. She works at home and designs T-shirts and sweatshirts. People love her bright green, red, and orange designs. Miller also prints T-shirts with people’s names on them. “You can’t have a name with over five letters,” she jokes. Her clothes make great gifts for friends and family. You can order Miller’s designs online. Everything costs $20 or less. Go to www.dianamillerTs.cup.org.\n\n' +
+        'Roberto Gomez makes amazing jewelry. He has a store in the historic district in downtown Miami. Each piece of jewelry is silver and takes about four weeks to make. He specializes in bracelets, necklaces, and earrings and has customers all over the U.S. This year, Gomez is making rings for the first time. He can design rings for weddings and other special occasions. Gomez’s business is still small. You can’t find his jewelry at other stores, but his small shop is doing well and is always busy. You can find Gomez’s designs at 542 North Third Street.' }],
+      questions: [
+        { id: 'O1', type: 'text', points: 2, text: '1. Diana Miller’s designs are in black and white.' },
+        { id: 'O2', type: 'text', points: 2, text: '2. She started her business after school.' },
+        { id: 'O3', type: 'text', points: 2, text: '3. Roberto Gomez makes each piece of jewelry in a couple of days.' },
+        { id: 'O4', type: 'text', points: 2, text: '4. He sells his jewelry at other stores in Miami.' }
+      ] }
+  ]
+});
+</script>
+</body>
+</html>

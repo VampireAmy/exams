@@ -175,13 +175,13 @@ a.unit:hover{background:color-mix(in srgb,var(--mark) 22%,transparent)}
 </div>
 
 <script type="module">
-import { auth, db, SETTINGS, isConfigured } from './firebase-init.js';
+import { auth, db, SETTINGS, isConfigured } from './firebase-init.js?v=2';
 import {
   onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, updateProfile, sendPasswordResetEmail
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import {
-  doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs
+  doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocsFromServer
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 /* ------------------------------------------------------------------ data */
@@ -320,7 +320,7 @@ async function loadSubmissions(uid) {
   state.unlocksOk = true;
   $('#loadMsg').textContent = '';
   try {
-    const u = await getDocs(query(collection(db, 'unlocks'), where('uid', '==', uid)));
+    const u = await getDocsFromServer(query(collection(db, 'unlocks'), where('uid', '==', uid)));
     u.forEach(d => { const x = d.data(); state.unlocks.add(`${x.book}_${x.unit}`); });
   } catch (err) {
     console.error(err);
@@ -328,7 +328,7 @@ async function loadSubmissions(uid) {
     $('#loadMsg').textContent = 'We couldn’t check which quizzes are unlocked. Check your internet connection, then reload this page.';
   }
   try {
-    const snap = await getDocs(query(collection(db, 'submissions'), where('uid', '==', uid)));
+    const snap = await getDocsFromServer(query(collection(db, 'submissions'), where('uid', '==', uid)));
     snap.forEach(d => {
       const s = d.data();
       state.subs.set(`${s.book}_${s.unit}`, s);
