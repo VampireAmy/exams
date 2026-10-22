@@ -22,4 +22,4 @@ export const isConfigured = !firebaseConfig.apiKey.startsWith("PASTE");
 
 export const app = isConfigured ? initializeApp(firebaseConfig) : null;
 export const auth = isConfigured ? getAuth(app) : null;
-export const db = isConfigured ? initializeFirestore(app, { experimentalAutoDetectLongPolling: true }) : null;
+export const db = isConfigured ? initializeFirestore(app, { experimentalForceLongPolling: true }) : null;
